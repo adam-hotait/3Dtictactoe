@@ -186,6 +186,9 @@ class Menu():
 								elif return_text == "OK":
 									self.server_address = inputBox.get_input_text()
 									ip_entered = True
+							else:
+								self.server_address = inputBox.get_input_text()
+								ip_entered = True
 						
 						elif event.type == KEYDOWN and event.key == K_BACKSPACE:
 							inputBox.removeChar()
