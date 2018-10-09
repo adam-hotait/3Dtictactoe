@@ -5,27 +5,23 @@ from graphical.clientSideBoard import ClientSideBoard
 
 class Gui3D():
     
-    def __init__(self, commObject):
-        
-        w, h = 1280, 720  #Width and height of the window
-        self.__window_dim = w, h
+    def __init__(self, commObject, window):
+
+        self.__screen = window.screen
         
         
         self.__commObject = commObject
         
         self.__board = ClientSideBoard()
         
-        self.__board.size = w, h
+        self.__board.size = window.get_dimension()
         self.__board.position = 0, 0
         
         self.__board.generate()
         
         
         self.rotation_speed = 0.5 #Speed at which the grid turns when an arrow is pressed, in rad/s
-    
-        pygame.init()
-        self.__screen = pygame.display.set_mode(self.__window_dim)
-        pygame.display.set_caption("Tic Tac Toe")
+
         
     def reset_board(self):
         self.__board.reset()
@@ -90,7 +86,7 @@ class Gui3D():
                 elif event[0] == "SET_TOKEN":
                     self.set_token(event[1], event[2], event[3], event[4])
                 elif event[0] == "RESET":
-                    self.reset()
+                    self.reset_board()
             
             
             #Now we take care of the grid rotation

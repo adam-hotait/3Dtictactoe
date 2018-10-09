@@ -2,6 +2,7 @@ from graphical.gui3d import Gui3D
 from graphical.commWithGUI import CommWithGUI
 from time import sleep
 from threading import Thread
+from window import Window
 
 
 class TestGUI(Thread):
@@ -34,7 +35,9 @@ commObject = CommWithGUI()
 test = TestGUI(commObject)
 test.start()
 
-gui = Gui3D(commObject)
+window = Window((1280, 720))
+
+gui = Gui3D(commObject, window)
 
 gui.run()
 gui.close()
