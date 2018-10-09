@@ -1,6 +1,7 @@
 import pygame
 from graphical.colors import *
 
+
 class MenuOption(pygame.sprite.Sprite):
     
     def __init__(self):
@@ -11,11 +12,11 @@ class MenuOption(pygame.sprite.Sprite):
         self.font = pygame.font.SysFont("comicsansms", 20)
         self.position = 0, 0
         self.size = 10, 10
-        self.text_color = BLUE
-        self.rectangle_color = RED
+        self.text_color = WHITE
+        self.rectangle_color = BLACK
         self.rectangle_color_when_selected = GREEN
         
-        #Sprite calculation
+        # Sprite calculation
         self.__text_object = self.font.render(self.text, True, self.text_color)
         self.__rect_object = pygame.Rect(self.position[0], self.position[1], self.size[0], self.size[1])
         text_w = self.__text_object.get_width()

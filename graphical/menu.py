@@ -8,9 +8,12 @@ class Menu():
     """Main menu of our game"""
     
     def __init__(self, window):
-        
+
         self.__window = window
-        
+        self.__fond = pygame.image.load("menu.jpg").convert()
+        self.__fond = pygame.transform.scale(self.__fond, (1280, 720))
+
+
         w, h = window.get_dimension()  #width and height of the window
         
         #Creation of the menu options
@@ -51,9 +54,7 @@ class Menu():
                 return k
         
         return -1
-    
-    
-    
+
     def get_choice(self):
     
         choice_not_done = True
@@ -63,8 +64,9 @@ class Menu():
             running = True
             clock = pygame.time.Clock()
         
-            selected_rect = -1 #index of the selected rectangle, -1 if no rectangle is selected
-        
+            selected_rect = -1  # index of the selected rectangle, -1 if no rectangle is selected
+
+
             clicked = None
         
             while running:
@@ -101,7 +103,7 @@ class Menu():
                 
                 #Display
                 self.__window.screen.fill((0, 0, 0))
-            
+                self.__window.screen.blit(self.__fond, (0, 0))
                 for k in range(len(self.__options)):
                     option = self.__options[k]
                 
@@ -200,7 +202,9 @@ class Menu():
                         
                         
                     #Display
+
                     self.__window.screen.fill((0, 0, 0))
+                    self.__window.screen.blit(self.__fond, (0, 0))
                     for k in range(len(self.__options)):
                         option = self.__options[k]
                         option.draw(self.__window.screen, False)
@@ -215,9 +219,3 @@ class Menu():
             #If the clicked button was not "join":
             else:
                 return clicked_option.return_text
-
-        
-            
-                    
-        
-        
