@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
-from clientSideBoard import ClientSideBoard
-from commWithGUI import CommWithGUI
+from graphical.clientSideBoard import ClientSideBoard
+
 
 class Gui3D():
     

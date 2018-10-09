@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
-from clientSideBoard import ClientSideBoard
+from graphical.clientSideBoard import ClientSideBoard
 
 
 pygame.init()

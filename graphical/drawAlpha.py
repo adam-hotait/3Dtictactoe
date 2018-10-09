@@ -1,6 +1,6 @@
 #Just a few functions to draw shapes with alpha trasparency (which the pygame draw function does not do
 import pygame
-from colors import *
+
 
 class DrawAlpha:
     

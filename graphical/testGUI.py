@@ -1,5 +1,5 @@
-from gui3d import Gui3D
-from commWithGUI import CommWithGUI
+from graphical.gui3d import Gui3D
+from graphical.commWithGUI import CommWithGUI
 from time import sleep
 from threading import Thread
 

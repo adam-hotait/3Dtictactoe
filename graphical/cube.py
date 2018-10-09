@@ -1,8 +1,7 @@
 import numpy as np
-from colors import *
+from graphical.colors import *
 import pygame
-from pygame.locals import *
-from drawAlpha import DrawAlpha
+from graphical.drawAlpha import DrawAlpha
 
 
 

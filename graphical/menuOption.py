@@ -1,5 +1,5 @@
 import pygame
-from colors import *
+from graphical.colors import *
 
 class MenuOption(pygame.sprite.Sprite):
     

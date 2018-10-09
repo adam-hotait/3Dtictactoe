@@ -1,7 +1,6 @@
 import pygame
-from pygame.locals import *
-from colors import *
-from menuOption import MenuOption
+from graphical.colors import *
+from graphical.menuOption import MenuOption
 
 class InputAddress(pygame.sprite.Sprite):
     

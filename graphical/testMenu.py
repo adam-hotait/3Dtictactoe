@@ -1,7 +1,5 @@
-from window import Window
-from menu import Menu
-import pygame
-from pygame.locals import *
+from graphical.window import Window
+from graphical.menu import Menu
 
 window = Window((1280, 720))
 

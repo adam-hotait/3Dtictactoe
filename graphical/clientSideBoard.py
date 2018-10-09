@@ -1,7 +1,7 @@
 import pygame
-from cube import Cube
-from view import View
-from colors import *
+from graphical.cube import Cube
+from graphical.view import View
+from graphical.colors import *
 
 
 class ClientSideBoard():

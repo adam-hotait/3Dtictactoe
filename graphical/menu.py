@@ -1,8 +1,8 @@
 import pygame
 from pygame.locals import *
-from menuOption import MenuOption
-from inputAddress import InputAddress
-from colors import *
+from graphical.menuOption import MenuOption
+from graphical.inputAddress import InputAddress
+
 
 class Menu():
     """Main menu of our game"""
