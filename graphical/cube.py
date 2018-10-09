@@ -6,8 +6,9 @@ from graphical.drawAlpha import DrawAlpha
 
 
 class Cube():
-    
+    """A class that represents a cube as it will be displayed on screen"""
     def __init__(self, center_pos, size, index):
+        """Constructor, creates the cube and calculates its coordinates in the default view"""
     
         self.__token = 0 #0 if nothing, 1 for a cross and 2 for a circle
         
@@ -41,19 +42,23 @@ class Cube():
         self.__rotated_center = None
     
     def get_token(self):
+        """Returns the token of the cube"""
         return self.__token
     
     def set_token(self, new_token):
+        """Sets the token of the cube"""
         self.__token = new_token
         
     def get_index(self):
+        """Returns the index (i, j, k) of the cube in the board"""
         return self.__index
     
     def apply_rotation(self, rotation_matrix):
+        """Rotates the cube by the given rotation matrix"""
     
         self.__rotated_points = [
                     np.dot(rotation_matrix, point)
-                    for point in self.__points ]
+                    for point in self.__points]
         
         self.__rotated_center = np.dot(rotation_matrix, self.__center)
     
@@ -66,7 +71,7 @@ class Cube():
         return self.get_depth() < other.get_depth()
     
     def draw(self, screen, color, pos, size, token_color=WHITE): #Position and size of the board in the window
-    
+        """Draws the cube on the screen, with the given color (handles alpha)"""
         
         projeted_points = []
         for point in self.__rotated_points:
@@ -111,6 +116,7 @@ class Cube():
             pygame.draw.circle(screen, token_color, projected_center, circle_radius)
             
     def point_in_cube(self, pos, board_pos, board_size): #size of the board in the window
+        """Tells if the cursor is on the cube"""
         
         projected_center = (
                     self.__rotated_center[0][0] + board_pos[0] + (1/2) * board_size[0],

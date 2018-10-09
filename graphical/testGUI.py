@@ -40,5 +40,5 @@ window = Window((1280, 720))
 gui = Gui3D(commObject, window)
 
 gui.run()
-gui.close()
+window.close()
 test.join()

@@ -3,9 +3,11 @@ import pygame
 
 
 class DrawAlpha:
+    """Wrapper class for draw-with-alpha functions"""
     
     @staticmethod
     def rect(screen, color, position, size):
+        """Draws a rectangle with transparency"""
         if len(color) < 4:
             pygame.draw.rect(screen, position, pygame.rect.Rect(position, size))
         else:
@@ -16,6 +18,7 @@ class DrawAlpha:
     
     @staticmethod
     def polygon(screen, color, points):
+        """Draws a polygon with transparency"""
         if len(color) < 4:
             pygame.draw.polygon(screen, color, points)
         else:

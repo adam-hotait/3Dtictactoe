@@ -1,4 +1,4 @@
-
+#File that defines several colors
 
 RED = (255, 0, 0)
 RED_SEMI = (255, 0, 0, 64)

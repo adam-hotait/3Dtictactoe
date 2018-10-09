@@ -5,8 +5,10 @@ from graphical.colors import *
 
 
 class ClientSideBoard():
+    """Class that represents the board as it will be displayed"""
     
     def __init__(self):
+        """Constructor. Default values of attributes (can be modified later)"""
         
         self.position = 50, 50
         
@@ -60,12 +62,15 @@ class ClientSideBoard():
         
         
     def get_token(self, i, j, k):
+        """Returns the token in the cube (i, j, k), 0 if None"""
         return self.__cubes[i][j][k].get_token()
     
     def set_token(self, i, j, k, token):
+        """Sets a token in the (i, j, k) cube"""
         self.__cubes[i][j][k].set_token(token)
     
     def reset(self):
+        """Removes all tokens"""
         for i in range(3):
             for j in range(3):
                 for k in range(3):
@@ -73,6 +78,7 @@ class ClientSideBoard():
     
     
     def draw(self, screen, selected=None):
+        """Draws the board on the screen. Optional parameter "selected" indicates which cube must be highlighted"""
         
         #Background
         background = pygame.rect.Rect(self.position, self.size)
@@ -105,7 +111,7 @@ class ClientSideBoard():
                     cube.draw(screen, self.cube_color, self.position, self.size)
         
     def point_on_a_cube(self, pos):
-        """We want to know if the cursor at pos is hovering a cube"""
+        """We want to know if the cursor at pos is hovering a cube. Returns (i, j, k) if cursor is above this cube, None if it is not hovering a cube"""
         #Firstly we sort cubes by depth
         cubes = []
         for i in range(3):

@@ -17,11 +17,13 @@ class Window:
         return pygame.event.get()
     
     def get_dimension(self):
+        """Returns the window dimension"""
         
         return pygame.display.get_surface().get_size()
     
     
     def close(self):
+        """Closes the window and quits pygame"""
         pygame.display.quit()
         pygame.quit()
         

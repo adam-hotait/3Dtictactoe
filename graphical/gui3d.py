@@ -4,8 +4,10 @@ from graphical.clientSideBoard import ClientSideBoard
 
 
 class Gui3D():
+    """Class for all the 3D GUI of the TicTacToe"""
     
     def __init__(self, commObject, window):
+        """Constructor. Default values of attributes (can be modified later)"""
 
         self.__screen = window.screen
         
@@ -24,13 +26,15 @@ class Gui3D():
 
         
     def reset_board(self):
+        """Removes all tokens"""
         self.__board.reset()
     
     def set_token(self, i, j, k, token):
+        """Sets a token in the (i, j, k) cube"""
         self.__board.set_token(i, j, k, token)
     
     def run(self):
-        
+        """Launches the GUI"""
         
         running = True
         clock = pygame.time.Clock()
@@ -108,9 +112,6 @@ class Gui3D():
             self.__board.draw(self.__screen, selected=selected_cube)
             pygame.display.flip()
             clock.tick(60)
-    
-    def close(self):
-        pygame.quit()
         
         
         
