@@ -20,6 +20,7 @@ class Gui3D():
         self.__board.position = 0, 0
         
         self.__board.generate()
+
         
         
         self.rotation_speed = 0.5 #Speed at which the grid turns when an arrow is pressed, in rad/s
@@ -111,7 +112,6 @@ class Gui3D():
             self.__screen.fill((0, 0, 0))
             self.__board.draw(self.__screen, selected=selected_cube)
             pygame.display.flip()
-            print('bjr')
             clock.tick(60)
         
         
