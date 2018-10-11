@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
-from graphical.clientSideBoard import ClientSideBoard
+from clientSideBoard import ClientSideBoard
 
 
 class Gui3D():
@@ -111,6 +111,7 @@ class Gui3D():
             self.__screen.fill((0, 0, 0))
             self.__board.draw(self.__screen, selected=selected_cube)
             pygame.display.flip()
+            print('bjr')
             clock.tick(60)
         
         
