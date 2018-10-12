@@ -26,6 +26,7 @@ class Gui3D():
         self.__board.generate()
 
         self.rotation_speed = 0.5 #Speed at which the grid turns when an arrow is pressed, in rad/s
+        self.rotation_speed_mouse = 0.01
         self.__rotation_when_won = 0.7
 
         # Font to display the winner's name
@@ -56,6 +57,9 @@ class Gui3D():
         arrow_down = False
         arrow_left = False
         arrow_right = False
+        right_click = False
+        last_mouse_pos = 0, 0
+        new_mouse_pos = 0, 0
         
         selected_cube = None
         
@@ -87,9 +91,17 @@ class Gui3D():
                     arrow_left = False
                 elif event.type == KEYUP and event.key == K_RIGHT:
                     arrow_right = False
+                elif event.type == MOUSEBUTTONDOWN and event.button == 3:
+                    right_click = True
+                    last_mouse_pos = event.pos
+                    new_mouse_pos = event.pos
+                elif event.type == MOUSEBUTTONUP and event.button == 3:
+                    right_click = False
                 
                 elif event.type == MOUSEMOTION:
                     selected_cube = self.__board.point_on_a_cube(event.pos)
+                    if right_click:
+                        new_mouse_pos = event.pos
                 
                 elif event.type == MOUSEBUTTONUP and event.button == 1:
                     self.__commObject.gui_add_event(["CLICK", selected_cube])
@@ -121,6 +133,12 @@ class Gui3D():
                     self.__board.view.rotate(1, -self.rotation_speed * elapsed)
                 if arrow_right:
                     self.__board.view.rotate(1, self.rotation_speed * elapsed)
+                if right_click:
+                    x_delta = new_mouse_pos[0] - last_mouse_pos[0]
+                    y_delta = new_mouse_pos[1] - last_mouse_pos[1]
+                    self.__board.view.rotate(1, -self.rotation_speed_mouse * x_delta)
+                    self.__board.view.rotate(0, self.rotation_speed_mouse * y_delta)
+                    last_mouse_pos = new_mouse_pos
             else:
                 self.__board.view.rotate(1, self.__rotation_when_won * elapsed)
             
