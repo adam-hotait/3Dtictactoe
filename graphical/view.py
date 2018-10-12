@@ -38,6 +38,6 @@ class View():
     
     def set_angles(self, horizontal, vertical):
         """Resets the rotation matrix with the given angles"""
-        self.__rotation = np.dot(self.__create_rotation_matrix(1, vertical), self.__create_rotation_matrix(1, horizontal))
+        self.__rotation = np.dot(self.__create_rotation_matrix(0, vertical), self.__create_rotation_matrix(1, horizontal))
     
         
