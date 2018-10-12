@@ -4,7 +4,7 @@ from view import View
 from colors import *
 
 
-class ClientSideBoard():
+class ClientSideBoard:
     """Class that represents the board as it will be displayed"""
     
     def __init__(self):
@@ -14,7 +14,7 @@ class ClientSideBoard():
         
         self.size = 20, 20
         
-        self.cube_color = GREY_SEMI
+        self.cube_color = GREY
         
         self.cross_color = RED
         
@@ -24,7 +24,7 @@ class ClientSideBoard():
         
         self.cube_with_circle_color = BLUE_SEMI
         
-        self.cube_selected_color = GREEN_SEMI
+        self.cube_selected_color = GREEN
         
         self.background_color = WHITE
         
@@ -34,12 +34,13 @@ class ClientSideBoard():
         
         self.space_between_cubes = 1 #Fraction of the cubes' size
         
-        self.cubes = None #Will be initialized in the generate method
+        self.__cubes = None #Will be initialized in the generate method
+
         
     
     def generate(self):
         """Generates cubes. Must be called after the board position and dimension have been set"""
-        #Creation of the cubes in 3D space
+        #Creation of the cubes and axis in 3D space
         #Cubes are indexed in the list with the front-top-left cube being (0, 0, 0) (but these are not its coordinates in the 3d space)
 
         self.__size_cubes = min(self.size[0], self.size[1]) / 8
@@ -59,6 +60,7 @@ class ClientSideBoard():
             for cubes in cubess:
                 for cube in cubes:
                     cube.apply_rotation(self.view.get_rotation())
+
         
         
     def get_token(self, i, j, k):
@@ -83,6 +85,7 @@ class ClientSideBoard():
         #Background
         background = pygame.rect.Rect(self.position, self.size)
         pygame.draw.rect(screen, self.background_color, background)
+
         
         #We put all cubes in a list
         cubes = []

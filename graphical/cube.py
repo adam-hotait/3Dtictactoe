@@ -81,20 +81,134 @@ class Cube():
         projected_center = (
                     int(self.__rotated_center[0][0] + pos[0] + (1/2) * size[0]),
                     int(self.__rotated_center[1][0] + pos[1] + (1/2) * size[1]))
-        
-        #Let's create all 6 faces
+
+        #Let's find the closest point
+        closest_point_index = 0
+        for k in range(len(self.__rotated_points)):
+            if self.__rotated_points[k][2] < self.__rotated_points[closest_point_index][2]:
+                closest_point_index = k
+
+        #Let's find the 3 faces that this point touches
         faces = []
-        faces.append((projeted_points[0], projeted_points[1], projeted_points[2],projeted_points[3]))
-        faces.append((projeted_points[0], projeted_points[1], projeted_points[5],projeted_points[4]))
-        faces.append((projeted_points[1], projeted_points[2], projeted_points[6],projeted_points[5]))
-        faces.append((projeted_points[0], projeted_points[4], projeted_points[7],projeted_points[3]))
-        faces.append((projeted_points[2], projeted_points[6], projeted_points[7],projeted_points[3]))
-        faces.append((projeted_points[4], projeted_points[5], projeted_points[6],projeted_points[7]))
+        if closest_point_index in (0,1,2,3):
+            faces.append((projeted_points[0], projeted_points[1], projeted_points[2], projeted_points[3]))
+        else:
+            faces.append((projeted_points[4], projeted_points[5], projeted_points[6], projeted_points[7]))
+        if closest_point_index in (0,1,5,4):
+            faces.append((projeted_points[0], projeted_points[1], projeted_points[5], projeted_points[4]))
+        else:
+            faces.append((projeted_points[2], projeted_points[6], projeted_points[7], projeted_points[3]))
+        if closest_point_index in (1,2,6,5):
+            faces.append((projeted_points[1], projeted_points[2], projeted_points[6], projeted_points[5]))
+        else:
+            faces.append((projeted_points[0], projeted_points[4], projeted_points[7], projeted_points[3]))
+
+
         
         #Let's print them !
         for face in faces:
             DrawAlpha.polygon(screen, color, face)
-        
+
+        #Let's find the 9 edges that can be visible:
+        if closest_point_index == 0:
+            edges = [
+                (projeted_points[0], projeted_points[1]),
+                (projeted_points[0], projeted_points[3]),
+                (projeted_points[0], projeted_points[4]),
+                (projeted_points[2], projeted_points[3]),
+                (projeted_points[4], projeted_points[7]),
+                (projeted_points[3], projeted_points[7]),
+                (projeted_points[4], projeted_points[5]),
+                (projeted_points[1], projeted_points[5]),
+                (projeted_points[1], projeted_points[2])
+            ]
+        elif closest_point_index == 1:
+            edges = [
+                (projeted_points[0], projeted_points[1]),
+                (projeted_points[0], projeted_points[3]),
+                (projeted_points[0], projeted_points[4]),
+                (projeted_points[2], projeted_points[3]),
+                (projeted_points[4], projeted_points[5]),
+                (projeted_points[1], projeted_points[5]),
+                (projeted_points[1], projeted_points[2]),
+                (projeted_points[6], projeted_points[5]),
+                (projeted_points[6], projeted_points[2])
+            ]
+        elif closest_point_index == 2:
+            edges = [
+                (projeted_points[0], projeted_points[1]),
+                (projeted_points[0], projeted_points[3]),
+                (projeted_points[2], projeted_points[3]),
+                (projeted_points[3], projeted_points[7]),
+                (projeted_points[1], projeted_points[5]),
+                (projeted_points[1], projeted_points[2]),
+                (projeted_points[6], projeted_points[7]),
+                (projeted_points[6], projeted_points[5]),
+                (projeted_points[6], projeted_points[2])
+            ]
+        elif closest_point_index == 3:
+            edges = [
+                (projeted_points[0], projeted_points[1]),
+                (projeted_points[0], projeted_points[3]),
+                (projeted_points[0], projeted_points[4]),
+                (projeted_points[2], projeted_points[3]),
+                (projeted_points[4], projeted_points[7]),
+                (projeted_points[3], projeted_points[7]),
+                (projeted_points[1], projeted_points[2]),
+                (projeted_points[6], projeted_points[7]),
+                (projeted_points[6], projeted_points[2])
+            ]
+        elif closest_point_index == 4:
+            edges = [
+                (projeted_points[0], projeted_points[1]),
+                (projeted_points[0], projeted_points[3]),
+                (projeted_points[0], projeted_points[4]),
+                (projeted_points[4], projeted_points[7]),
+                (projeted_points[3], projeted_points[7]),
+                (projeted_points[4], projeted_points[5]),
+                (projeted_points[1], projeted_points[5]),
+                (projeted_points[6], projeted_points[7]),
+                (projeted_points[6], projeted_points[5]),
+            ]
+        elif closest_point_index == 5:
+            edges = [
+                (projeted_points[0], projeted_points[1]),
+                (projeted_points[0], projeted_points[4]),
+                (projeted_points[4], projeted_points[7]),
+                (projeted_points[4], projeted_points[5]),
+                (projeted_points[1], projeted_points[5]),
+                (projeted_points[1], projeted_points[2]),
+                (projeted_points[6], projeted_points[7]),
+                (projeted_points[6], projeted_points[5]),
+                (projeted_points[6], projeted_points[2])
+            ]
+        elif closest_point_index == 6:
+            edges = [
+                (projeted_points[2], projeted_points[3]),
+                (projeted_points[4], projeted_points[7]),
+                (projeted_points[3], projeted_points[7]),
+                (projeted_points[4], projeted_points[5]),
+                (projeted_points[1], projeted_points[5]),
+                (projeted_points[1], projeted_points[2]),
+                (projeted_points[6], projeted_points[7]),
+                (projeted_points[6], projeted_points[5]),
+                (projeted_points[6], projeted_points[2])
+            ]
+        elif closest_point_index == 7:
+            edges = [
+                (projeted_points[0], projeted_points[3]),
+                (projeted_points[0], projeted_points[4]),
+                (projeted_points[2], projeted_points[3]),
+                (projeted_points[4], projeted_points[7]),
+                (projeted_points[3], projeted_points[7]),
+                (projeted_points[4], projeted_points[5]),
+                (projeted_points[6], projeted_points[7]),
+                (projeted_points[6], projeted_points[5]),
+                (projeted_points[6], projeted_points[2])
+            ]
+        #Now we draw them
+        for edge in edges:
+            pygame.draw.line(screen, BLACK, edge[0], edge[1], 2)
         #Now we can print a cross or a circle
         #Cross:
         if self.__token == 1:
