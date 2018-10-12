@@ -34,7 +34,7 @@ class ClientSideBoard:
         
         self.space_between_cubes = 1 #Fraction of the cubes' size
         
-        self.__cubes = None #Will be initialized in the generate method
+        self.__cubes = None  # Will be initialized in the generate method
 
         
     
@@ -79,7 +79,7 @@ class ClientSideBoard:
                     self.set_token(i, j, k, 0)
     
     
-    def draw(self, screen, selected=None):
+    def draw(self, screen, selected=None, winning_player=0, winning_line = []):
         """Draws the board on the screen. Optional parameter "selected" indicates which cube must be highlighted"""
         
         #Background
@@ -102,17 +102,37 @@ class ClientSideBoard:
         cubes.sort(reverse=True)
         
         for cube in cubes:
-            token = cube.get_token()
-            if token == 1:
-                cube.draw(screen, self.cube_with_cross_color, self.position, self.size, self.cross_color)
-            elif token == 2:
-                cube.draw(screen, self.cube_with_circle_color, self.position, self.size, self.circle_color)
-            else:
-                if selected and cube.get_index() == selected:
-                    cube.draw(screen, self.cube_selected_color, self.position, self.size)
+            if winning_player == 0:
+                token = cube.get_token()
+                if token == 1:
+                    cube.draw(screen, self.cube_with_cross_color, self.position, self.size, self.cross_color)
+                elif token == 2:
+                    cube.draw(screen, self.cube_with_circle_color, self.position, self.size, self.circle_color)
+                else:
+                    if selected and cube.get_index() == selected:
+                        cube.draw(screen, self.cube_selected_color, self.position, self.size)
+                    else:
+                        cube.draw(screen, self.cube_color, self.position, self.size)
+            elif winning_player == 1:
+                token = cube.get_token()
+                if token == 1:
+                    if cube.get_index() in winning_line:
+                        cube.draw(screen, self.cube_with_cross_color, self.position, self.size, self.cross_color)
+                    else:
+                        cube.draw(screen, self.cube_color, self.position, self.size)
                 else:
                     cube.draw(screen, self.cube_color, self.position, self.size)
-        
+            elif winning_player == 2:
+                token = cube.get_token()
+                if token == 2:
+                    if cube.get_index() in winning_line:
+                        cube.draw(screen, self.cube_with_circle_color, self.position, self.size, self.circle_color)
+                    else:
+                        cube.draw(screen, self.cube_color, self.position, self.size)
+                else:
+                    cube.draw(screen, self.cube_color, self.position, self.size)
+
+
     def point_on_a_cube(self, pos):
         """We want to know if the cursor at pos is hovering a cube. Returns (i, j, k) if cursor is above this cube, None if it is not hovering a cube"""
         #Firstly we sort cubes by depth
