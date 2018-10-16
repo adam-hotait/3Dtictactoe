@@ -23,7 +23,7 @@ class CommClient(Thread):
                 elif event[0] == "CLK":
                     i, j, k = event[1]
                     self.__connexion_with_server.send(f'CLK{i}{j}{k}'.encode())
-            sleep(0.1)
+
 
             for event in self.receive_from_server():
                 if event[0] == "QUT":
@@ -35,6 +35,8 @@ class CommClient(Thread):
                     self.__commGUIObject.other_add_event(event)
                 elif event[0] == "WIN":
                     self.__commGUIObject.other_add_event(event)
+
+            sleep(0.1)
 
     def receive_from_server(self):
         resp = self.__connexion_with_server.recv(1024).decode()
