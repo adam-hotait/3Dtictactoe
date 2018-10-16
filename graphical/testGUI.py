@@ -14,18 +14,18 @@ class TestGUI(Thread):
     def run(self):
         running = True
         
-        self.__commObject.other_add_event(["SET_TOKEN", 0,1,0,1])
-        self.__commObject.other_add_event(["SET_TOKEN", 1,0,2,2])
-        self.__commObject.other_add_event(["SET_TOKEN", 0, 0, 0, 1])
-        self.__commObject.other_add_event(["SET_TOKEN", 1, 1, 1, 1])
-        self.__commObject.other_add_event(["SET_TOKEN", 2, 2, 2, 1])
+        self.__commObject.other_add_event(["SET", 0,1,0,1])
+        self.__commObject.other_add_event(["SET", 1,0,2,2])
+        self.__commObject.other_add_event(["SET", 0, 0, 0, 1])
+        self.__commObject.other_add_event(["SET", 1, 1, 1, 1])
+        self.__commObject.other_add_event(["SET", 2, 2, 2, 1])
         # self.__commObject.other_add_event(["WIN", 1, [(0, 0, 0), (1, 1, 1), (2, 2, 2)]])
         
         while running:
             for event in commObject.get_and_empty_GUI_events():
-                if event[0] == "QUIT":
+                if event[0] == "QUT":
                     running = False
-                elif event[0] == "CLICK":
+                elif event[0] == "CLK":
                     if event[1]:
                         print("Click detected on cube", event[1])
                     else:
