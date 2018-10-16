@@ -72,7 +72,7 @@ class Gui3D():
             #Events
             for event in pygame.event.get():
                 if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
-                    self.__commObject.gui_add_event(["QUIT"])
+                    self.__commObject.gui_add_event(["QUT"])
                     running = False
                     
                 elif event.type == KEYDOWN and event.key == K_UP:
@@ -104,15 +104,15 @@ class Gui3D():
                         new_mouse_pos = event.pos
                 
                 elif event.type == MOUSEBUTTONUP and event.button == 1:
-                    self.__commObject.gui_add_event(["CLICK", selected_cube])
+                    self.__commObject.gui_add_event(["CLK", selected_cube])
                 
             #Checking the commands the Main thread could have sent
             for event in self.__commObject.get_and_empty_Main_events():
-                if event[0] == "QUIT":
+                if event[0] == "QUT":
                     running = False
-                elif event[0] == "SET_TOKEN":
+                elif event[0] == "SET":
                     self.set_token(event[1], event[2], event[3], event[4])
-                elif event[0] == "RESET":
+                elif event[0] == "RST":
                     self.reset_board()
                 elif event[0] == "WIN":
                     winning_player = event[1]
