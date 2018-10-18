@@ -1,10 +1,12 @@
 import socket
 from gamesession import GameSession
 from listentoclient import ListenToClient
+from threading import Thread
 
 
-class Server:
+class Server(Thread):
     def __init__(self, host='', port=12800):
+        Thread.__init__(self)
         self.host = host
         self.port = port
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -15,7 +17,7 @@ class Server:
         self.maxclients = 2
         self.gamesession = GameSession()
 
-    def listen(self):
+    def run(self):
         self.sock.listen(self.maxclients)
         while len(self.clientlist) < self.maxclients:
             client, address = self.sock.accept()
@@ -32,4 +34,4 @@ class Server:
 
 
 if __name__ == "__main__":
-    Server('', 12800).listen()
+    Server('', 12800).run()
