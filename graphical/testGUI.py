@@ -1,8 +1,8 @@
-from gui3d import Gui3D
-from commWithGUI import CommWithGUI
+from .gui3d import Gui3D
+from .commWithGUI import CommWithGUI
 from time import sleep
 from threading import Thread
-from window import Window
+from .window import Window
 
 
 class TestGUI(Thread):

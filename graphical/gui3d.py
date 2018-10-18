@@ -1,8 +1,8 @@
 import pygame
 from pygame.locals import *
-from clientSideBoard import ClientSideBoard
+from .clientSideBoard import ClientSideBoard
 import numpy as np
-from colors import *
+from .colors import *
 
 
 class Gui3D():

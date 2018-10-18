@@ -10,7 +10,7 @@ class Menu():
     def __init__(self, window):
 
         self.__window = window
-        self.__fond = pygame.image.load("menu.jpg").convert()
+        self.__fond = pygame.image.load("graphical/menu.jpg").convert()
         self.__fond = pygame.transform.scale(self.__fond, (1280, 720))
 
 

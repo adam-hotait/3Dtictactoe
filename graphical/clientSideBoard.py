@@ -1,7 +1,7 @@
 import pygame
-from cube import Cube
-from view import View
-from colors import *
+from .cube import Cube
+from .view import View
+from .colors import *
 
 
 class ClientSideBoard:
@@ -38,7 +38,7 @@ class ClientSideBoard:
 
         self.__background = None
         try:
-            self.__background = pygame.image.load("background_board.png")
+            self.__background = pygame.image.load("graphical/background_board.png")
         except:
             pass
 

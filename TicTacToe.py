@@ -1,12 +1,12 @@
 from server import Server
 from client import Client
-from window import Window
-from menu import Menu
+from graphical.window import Window
+from graphical.menu import Menu
 
-class TicTacToeMain()
+class TicTacToeMain():
     """Main class of the program, displays menu then launches client and server"""
     
-    def __init__(self)
+    def __init__(self):
         """Constructor"""
         
         self.__window_dimension = (1280, 720)
