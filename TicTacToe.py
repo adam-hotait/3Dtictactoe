@@ -1,6 +1,7 @@
 from server import Server
 from client import Client
 from window import Window
+frommenu import Menu
 
 class TicTatToeMain()
     """Main class of the program, displays menu then launches client and server"""
@@ -21,6 +22,12 @@ class TicTatToeMain()
                 running = False
             
             elif choice == "JOIN":
-                host, port = menu.get_server()
-                client = Client(self.__window)
-                client.join_server()
+                host = menu.server_address
+                Client(2, self.__window, host)
+                running = False
+
+            elif choice == "CREATE":
+                server = Server()
+                server.start()
+                Client(1, self.__window, 'localhost')
+                running = False
