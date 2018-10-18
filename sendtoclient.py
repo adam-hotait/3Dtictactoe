@@ -14,9 +14,7 @@ class SendToClient(threading.Thread):
         while True:
             with self.gamesession.send_condition:
                 self.gamesession.send_condition.wait()
-                #
-                # Send self.gamesession.response
-                #
+
                 self.gamesession.set_semaphore()
 
 

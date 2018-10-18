@@ -42,7 +42,7 @@ class GameSession(threading.Thread):
                 with self.__lock:
                     data: dict = self.__data_queue.pop()
                 if not self.__board.win:
-                    if data['command'] == 'SET':
+                    if data['command'] == 'CLK':
                         if data['player_id'] == self.__current_player:
                             status, token_data = self.__board.set_token(data['i'], data['j'], data['k'],
                                                                         data['player_id'])

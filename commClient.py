@@ -17,13 +17,12 @@ class CommClient(Thread):
             for event in self.__commGUIObject.get_and_empty_GUI_events():
                 if event[0] == "QUT":
                     running = False
-                    self.__connexion_with_server.send(b"QUIT")
+                    self.__connexion_with_server.send(b"QUT")
                 elif event[0] == "NEW":
                     self.__connexion_with_server.send(b"NEW")
                 elif event[0] == "CLK":
                     i, j, k = event[1]
                     self.__connexion_with_server.send(f'CLK{i}{j}{k}'.encode())
-
 
             for event in self.receive_from_server():
                 if event[0] == "QUT":

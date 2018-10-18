@@ -27,7 +27,7 @@ class Server(Thread):
             if len(self.clientlist) == 1:
                 self.gamesession.start()
             self.gamesession.newplayer(client)
-            self.clientlisteners.append(ListenToClient(client, address, self.gamesession))
+            self.clientlisteners.append(ListenToClient(client, address, self.gamesession, len(self.clientlist)))
         for clientlistener in self.clientlisteners:
             clientlistener.start()
         self.gamesession.join()
