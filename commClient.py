@@ -1,5 +1,6 @@
 from time import sleep
 from threading import Thread
+import select
 
 
 class CommClient(Thread):
@@ -41,7 +42,13 @@ class CommClient(Thread):
             sleep(0.1)
 
     def receive_from_server(self):
-        resp = self.__connexion_with_server.recv(1024)
+
+        # Let's see if the server wants to send us something
+        socket_ready, _, _ = select.select([self.__connexion_with_server], [], [], 0.05)
+        if len(socket_ready) > 0:
+            resp = self.__connexion_with_server.recv(1024)
+        else:
+            resp = ''
         print("Réception par le client : ", resp)
         L = []
         if resp:
