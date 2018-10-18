@@ -1,5 +1,6 @@
 from time import sleep
 from threading import Thread
+import select
 
 
 class CommClient(Thread):
@@ -17,11 +18,14 @@ class CommClient(Thread):
             for event in self.__commGUIObject.get_and_empty_GUI_events():
                 if event[0] == "QUT":
                     running = False
+                    print('Envoi du client au serveur : b"QUT"')
                     self.__connexion_with_server.send(b"QUT")
                 elif event[0] == "NEW":
+                    print('Envoi du client au serveur : b"NEW"')
                     self.__connexion_with_server.send(b"NEW")
                 elif event[0] == "CLK":
                     i, j, k = event[1]
+                    print('Envoi du client au serveur :', f'CLK{i}{j}{k}'.encode())
                     self.__connexion_with_server.send(f'CLK{i}{j}{k}'.encode())
 
             for event in self.receive_from_server():
@@ -38,7 +42,14 @@ class CommClient(Thread):
             sleep(0.1)
 
     def receive_from_server(self):
-        resp = self.__connexion_with_server.recv(1024)
+
+        # Let's see if the server wants to send us something
+        socket_ready, _, _ = select.select([self.__connexion_with_server], [], [], 0.05)
+        if len(socket_ready) > 0:
+            resp = self.__connexion_with_server.recv(1024)
+        else:
+            resp = ''
+        print("Réception par le client : ", resp)
         L = []
         if resp:
             resp = resp.decode()
