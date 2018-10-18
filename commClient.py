@@ -38,27 +38,29 @@ class CommClient(Thread):
             sleep(0.1)
 
     def receive_from_server(self):
-        resp = self.__connexion_with_server.recv(1024).decode()
+        resp = self.__connexion_with_server.recv(1024)
         L = []
-        p = 0
-        while p < len(resp):
-            code = resp[p:p+3]
-            if code == b"QUT":
-                L.append("QUT")
-                p = p + 3
-            elif code == b"RST":
-                L.append("RST")
-                p = p + 3
-            elif code == b"SET":
-                L.append(["SET", int(resp[p+4]), int(resp[p+5]), int(resp[p+6]), int(resp[p+7])])
-                p = p + 7
-            elif code == b"WIN":
-                L.append(["WIN", int(resp[p + 4]), [
-                        (int(resp[p + 5]), int(resp[p + 6]), int(resp[p + 7])),
-                        (int(resp[p + 8]), int(resp[p + 9]), int(resp[p + 10])),
-                        (int(resp[p + 11]), int(resp[p + 12]), int(resp[p + 13]))
-                    ]])
-                p = p + 13
+        if resp:
+            resp = resp.decode()
+            p = 0
+            while p < len(resp):
+                code = resp[p:p+3]
+                if code == b"QUT":
+                    L.append("QUT")
+                    p = p + 3
+                elif code == b"RST":
+                    L.append("RST")
+                    p = p + 3
+                elif code == b"SET":
+                    L.append(["SET", int(resp[p+4]), int(resp[p+5]), int(resp[p+6]), int(resp[p+7])])
+                    p = p + 7
+                elif code == b"WIN":
+                    L.append(["WIN", int(resp[p + 4]), [
+                            (int(resp[p + 5]), int(resp[p + 6]), int(resp[p + 7])),
+                            (int(resp[p + 8]), int(resp[p + 9]), int(resp[p + 10])),
+                            (int(resp[p + 11]), int(resp[p + 12]), int(resp[p + 13]))
+                        ]])
+                    p = p + 13
         return L
 
 
