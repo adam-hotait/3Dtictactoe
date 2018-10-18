@@ -47,9 +47,9 @@ class GameSession(threading.Thread):
                             status, token_data = self.__board.set_token(data['i'], data['j'], data['k'],
                                                                         data['player_id'])
                             if status == 'WIN':
-                                self.__response = status, token_data[0], token_data[1], token_data[2]
+                                self.__response = status, data['player_id'], token_data[0], token_data[1], token_data[2]
                             else:
-                                self.__response = status, token_data[0]
+                                self.__response = status, data['player_id'], token_data[0]
                 else:
                     if data['command'] == 'RST':
                         self.__board.reset()

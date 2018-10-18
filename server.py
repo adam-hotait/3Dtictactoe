@@ -1,6 +1,7 @@
 import socket
 from gamesession import GameSession
 from listentoclient import ListenToClient
+from sendtoclient import SendToClient
 from threading import Thread
 
 
@@ -27,7 +28,8 @@ class Server(Thread):
             if len(self.clientlist) == 1:
                 self.gamesession.start()
             self.gamesession.newplayer(client)
-            self.clientlisteners.append(ListenToClient(client, address, self.gamesession, len(self.clientlist)))
+            self.clientlisteners.append(ListenToClient(client, self.gamesession, len(self.clientlist)))
+            self.clientsenders.append(SendToClient(client, self.gamesession))
         for clientlistener in self.clientlisteners:
             clientlistener.start()
         self.gamesession.join()

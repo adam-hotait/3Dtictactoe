@@ -2,7 +2,7 @@ import threading
 
 
 class ListenToClient(threading.Thread):
-    def __init__(self, client, address, gamesession, player_id):
+    def __init__(self, client, gamesession, player_id):
         super().__init__()
         print('init')
         self.client = client
@@ -15,6 +15,7 @@ class ListenToClient(threading.Thread):
         while True:
             # try:
             data = self.client.recv(self.size)
+            print('recv client: ', data)
             if data:
                 data = data.decode()
                 data_dict = dict(player_id = self.player_id)
