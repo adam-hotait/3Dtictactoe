@@ -21,7 +21,6 @@ class Server(Thread):
         self.sock.listen(self.maxclients)
         while len(self.clientlist) < self.maxclients:
             client, address = self.sock.accept()
-            client.settimeout(60)
             self.clientlist.append(client)
             print(client)
             if len(self.clientlist) == 1:

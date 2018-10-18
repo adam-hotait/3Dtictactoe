@@ -17,11 +17,14 @@ class CommClient(Thread):
             for event in self.__commGUIObject.get_and_empty_GUI_events():
                 if event[0] == "QUT":
                     running = False
+                    print('Envoi du client au serveur : b"QUT"')
                     self.__connexion_with_server.send(b"QUT")
                 elif event[0] == "NEW":
+                    print('Envoi du client au serveur : b"NEW"')
                     self.__connexion_with_server.send(b"NEW")
                 elif event[0] == "CLK":
                     i, j, k = event[1]
+                    print('Envoi du client au serveur :', f'CLK{i}{j}{k}'.encode())
                     self.__connexion_with_server.send(f'CLK{i}{j}{k}'.encode())
 
             for event in self.receive_from_server():
@@ -39,6 +42,7 @@ class CommClient(Thread):
 
     def receive_from_server(self):
         resp = self.__connexion_with_server.recv(1024)
+        print("Réception par le client : ", resp)
         L = []
         if resp:
             resp = resp.decode()
