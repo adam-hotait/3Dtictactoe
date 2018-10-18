@@ -1,9 +1,9 @@
 from server import Server
 from client import Client
 from window import Window
-frommenu import Menu
+from menu import Menu
 
-class TicTatToeMain()
+class TicTacToeMain()
     """Main class of the program, displays menu then launches client and server"""
     
     def __init__(self)
@@ -31,3 +31,6 @@ class TicTatToeMain()
                 server.start()
                 Client(1, self.__window, 'localhost')
                 running = False
+
+if __name__ == '__main__':
+    TicTacToeMain()
