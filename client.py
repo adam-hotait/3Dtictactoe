@@ -15,3 +15,4 @@ class Client:
         self.__gui = Gui3D(self.__commGUIObject, self.__window)
         self.__commClientObject.start()
         self.__gui.run()
+        self.__window.close()

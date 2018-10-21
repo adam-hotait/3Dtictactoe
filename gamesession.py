@@ -40,18 +40,18 @@ class GameSession(threading.Thread):
                 self.__semaphore.acquire()
                 self.__response = None
                 with self.__lock:
-                    data: dict = self.__data_queue.pop()
+                    data_dict = self.__data_queue.pop()
                 if not self.__board.win:
-                    if data['command'] == 'CLK':
-                        if data['player_id'] == self.__current_player:
-                            status, token_data = self.__board.set_token(data['i'], data['j'], data['k'],
-                                                                        data['player_id'])
+                    if data_dict['command'] == 'CLK':
+                        if data_dict['player_id'] == self.__current_player:
+                            status, token_data = self.__board.set_token(data_dict['i'], data_dict['j'], data_dict['k'],
+                                                                        data_dict['player_id'])
                             if status == 'WIN':
-                                self.__response = status, data['player_id'], token_data[0], token_data[1], token_data[2]
+                                self.__response = status, data_dict['player_id'], token_data[0], token_data[1], token_data[2]
                             else:
-                                self.__response = status, data['player_id'], token_data[0]
+                                self.__response = status, data_dict['player_id'], token_data[0]
                 else:
-                    if data['command'] == 'RST':
+                    if data_dict['command'] == 'RST':
                         self.__board.reset()
                         self.__response = 'RST'
                 if self.__response is not None:

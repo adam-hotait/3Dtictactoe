@@ -15,8 +15,11 @@ class Server(Thread):
         self.sock.bind((self.host, self.port))
         self.clientlist = []  # List of clients
         self.clientlisteners = []  # List of client listeners objects
+        self.clientsenders = []
         self.maxclients = 2
+        print("serveur demarre")
         self.gamesession = GameSession()
+        print("gamesession cree")
 
     def run(self):
         self.sock.listen(self.maxclients)
@@ -31,6 +34,8 @@ class Server(Thread):
             self.clientsenders.append(SendToClient(client, self.gamesession))
         for clientlistener in self.clientlisteners:
             clientlistener.start()
+        for clientsender in self.clientsenders:
+            clientsender.start()
         self.gamesession.join()
 
 

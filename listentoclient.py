@@ -15,16 +15,16 @@ class ListenToClient(threading.Thread):
         while True:
             # try:
             data = self.client.recv(self.size)
-            print('recv client: ', data)
+            #print('recv client: ', data)
             if data:
                 data = data.decode()
                 data_dict = dict(player_id = self.player_id)
                 data_dict["command"] = data[0:3]
                 if data_dict["command"] == 'CLK':
-                    data["i"] = data[3]
-                    data["j"] = data[4]
-                    data["k"] = data[5]
-                self.gamesession.receive_event(data)
+                    data_dict["i"] = data[3]
+                    data_dict["j"] = data[4]
+                    data_dict["k"] = data[5]
+                self.gamesession.receive_event(data_dict)
             #     else:
             #         raise ('Client disconnected')
             # except:

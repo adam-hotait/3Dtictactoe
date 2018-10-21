@@ -49,9 +49,9 @@ class CommClient(Thread):
             resp = self.__connexion_with_server.recv(1024)
         else:
             resp = ''
-        print("Réception par le client : ", resp)
         L = []
         if resp:
+            print("Reception par le client : ", resp)
             resp = resp.decode()
             p = 0
             while p < len(resp):
