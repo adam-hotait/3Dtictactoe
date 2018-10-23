@@ -71,11 +71,12 @@ class ClientSideBoard:
         
     def get_token(self, i, j, k):
         """Returns the token in the cube (i, j, k), 0 if None"""
-        return self.__cubes[i][j][k].get_token()
+        return self.__cubes[k][j][i].get_token()
     
     def set_token(self, i, j, k, token):
         """Sets a token in the (i, j, k) cube"""
-        self.__cubes[i][j][k].set_token(token)
+        print("set_token = ({},{},{}), with {}".format(i, j, k, token))
+        self.__cubes[k][j][i].set_token(token)
     
     def reset(self):
         """Removes all tokens"""
@@ -97,7 +98,7 @@ class ClientSideBoard:
         for i in range(3):
             for j in range(3):
                 for k in range(3):
-                    cubes.append(self.__cubes[i][j][k])
+                    cubes.append(self.__cubes[k][j][i])
         
         #We apply the rotation
         for cube in cubes:
@@ -119,21 +120,16 @@ class ClientSideBoard:
                     else:
                         cube.draw(screen, self.cube_color, self.position, self.size)
             elif winning_player == 1:
-                token = cube.get_token()
-                if token == 1:
-                    if cube.get_index() in winning_line:
-                        cube.draw(screen, self.cube_with_cross_color, self.position, self.size, self.cross_color)
-                    else:
-                        cube.draw(screen, self.cube_color, self.position, self.size)
+                if cube.get_index() in winning_line:
+                    cube.set_token(1)
+                    cube.draw(screen, self.cube_with_cross_color, self.position, self.size, self.cross_color)
                 else:
                     cube.draw(screen, self.cube_color, self.position, self.size)
+
             elif winning_player == 2:
-                token = cube.get_token()
-                if token == 2:
-                    if cube.get_index() in winning_line:
-                        cube.draw(screen, self.cube_with_circle_color, self.position, self.size, self.circle_color)
-                    else:
-                        cube.draw(screen, self.cube_color, self.position, self.size)
+                if cube.get_index() in winning_line:
+                    cube.set_token(2)
+                    cube.draw(screen, self.cube_with_circle_color, self.position, self.size, self.circle_color)
                 else:
                     cube.draw(screen, self.cube_color, self.position, self.size)
 
@@ -145,7 +141,7 @@ class ClientSideBoard:
         for i in range(3):
             for j in range(3):
                 for k in range(3):
-                    cubes.append(self.__cubes[i][j][k])
+                    cubes.append(self.__cubes[k][j][i])
         cubes.sort()
         
         

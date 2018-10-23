@@ -24,9 +24,10 @@ class CommClient(Thread):
                     print('Envoi du client au serveur : b"NEW"')
                     self.__connexion_with_server.send(b"NEW")
                 elif event[0] == "CLK":
-                    i, j, k = event[1]
-                    print('Envoi du client au serveur :', f'CLK{i}{j}{k}'.encode())
-                    self.__connexion_with_server.send(f'CLK{i}{j}{k}'.encode())
+                    if event[1]:
+                        i, j, k = event[1]
+                        print('Envoi du client au serveur :', f'CLK{i}{j}{k}'.encode())
+                        self.__connexion_with_server.send(f'CLK{i}{j}{k}'.encode())
 
             for event in self.receive_from_server():
                 if event[0] == "QUT":

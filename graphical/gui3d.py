@@ -40,8 +40,9 @@ class Gui3D():
         """Removes all tokens"""
         self.__board.reset()
     
-    def set_token(self, i, j, k, token):
+    def set_token(self, token, i, j, k):
         """Sets a token in the (i, j, k) cube"""
+        print("set_token = ({},{},{}), with {}".format(i, j, k, token))
         self.__board.set_token(i, j, k, token)
     
     def run(self):
