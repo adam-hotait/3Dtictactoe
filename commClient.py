@@ -53,25 +53,29 @@ class CommClient(Thread):
         if resp:
             print("Reception par le client : ", resp)
             resp = resp.decode()
+            print('resp : ', resp)
             p = 0
             while p < len(resp):
+                print('p: ', p)
+                print('len: ', len(resp))
                 code = resp[p:p+3]
-                if code == b"QUT":
+                if code == "QUT":
                     L.append("QUT")
                     p = p + 3
-                elif code == b"RST":
+                elif code == "RST":
                     L.append("RST")
                     p = p + 3
-                elif code == b"SET":
-                    L.append(["SET", int(resp[p+4]), int(resp[p+5]), int(resp[p+6]), int(resp[p+7])])
+                elif code == "SET":
+                    L.append(["SET", int(resp[p+3]), int(resp[p+4]), int(resp[p+5]), int(resp[p+6])])
                     p = p + 7
-                elif code == b"WIN":
-                    L.append(["WIN", int(resp[p + 4]), [
-                            (int(resp[p + 5]), int(resp[p + 6]), int(resp[p + 7])),
-                            (int(resp[p + 8]), int(resp[p + 9]), int(resp[p + 10])),
-                            (int(resp[p + 11]), int(resp[p + 12]), int(resp[p + 13]))
+                elif code == "WIN":
+                    L.append(["WIN", int(resp[p + 3]), [
+                            (int(resp[p + 4]), int(resp[p + 5]), int(resp[p + 6])),
+                            (int(resp[p + 7]), int(resp[p + 8]), int(resp[p + 9])),
+                            (int(resp[p + 10]), int(resp[p + 11]), int(resp[p + 12]))
                         ]])
                     p = p + 13
+            print(L)
         return L
 
 

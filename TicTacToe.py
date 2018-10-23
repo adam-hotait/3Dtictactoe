@@ -9,7 +9,7 @@ class TicTacToeMain():
     def __init__(self):
         """Constructor"""
         
-        self.__window_dimension = (1280, 720)
+        self.__window_dimension = (800, 600)
         self.__window = Window(self.__window_dimension)
         
         running = True

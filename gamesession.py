@@ -9,7 +9,7 @@ class GameSession(threading.Thread):
         self.__playerlist = []
         self.__data_queue = []
         self.__response = None
-        self.__current_player = 0
+        self.__current_player = 1
         self.__board = Board()
         self.__recvEvent = threading.Event()
         self.__sendCondition = threading.Condition()
@@ -35,14 +35,20 @@ class GameSession(threading.Thread):
     def run(self):
         while True:
             self.__recvEvent.wait()
+            print('ran gamesession')
             with self.send_condition:
                 self.__semaphore.acquire()
                 self.__semaphore.acquire()
                 self.__response = None
+                print('ran inner loop')
                 with self.__lock:
                     data_dict = self.__data_queue.pop()
+                    print('data dict ', data_dict)
+                print('data dict ', data_dict)
                 if not self.__board.win:
+                    print('Entered not win')
                     if data_dict['command'] == 'CLK':
+                        print('Entered CLK')
                         if data_dict['player_id'] == self.__current_player:
                             status, token_data = self.__board.set_token(data_dict['i'], data_dict['j'], data_dict['k'],
                                                                         data_dict['player_id'])
@@ -50,6 +56,8 @@ class GameSession(threading.Thread):
                                 self.__response = status, data_dict['player_id'], token_data[0], token_data[1], token_data[2]
                             else:
                                 self.__response = status, data_dict['player_id'], token_data[0]
+                                print('self.__response : ', self.__response)
+                            self.__current_player = (self.__current_player + 2) % 2 + 1
                 else:
                     if data_dict['command'] == 'RST':
                         self.__board.reset()

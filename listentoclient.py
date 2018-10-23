@@ -11,19 +11,18 @@ class ListenToClient(threading.Thread):
         self.player_id = player_id
 
     def run(self):
-        print('ran')
         while True:
             # try:
             data = self.client.recv(self.size)
-            #print('recv client: ', data)
+            print('recv client: ', data)
             if data:
                 data = data.decode()
                 data_dict = dict(player_id = self.player_id)
                 data_dict["command"] = data[0:3]
                 if data_dict["command"] == 'CLK':
-                    data_dict["i"] = data[3]
-                    data_dict["j"] = data[4]
-                    data_dict["k"] = data[5]
+                    data_dict["i"] = int(data[3])
+                    data_dict["j"] = int(data[4])
+                    data_dict["k"] = int(data[5])
                 self.gamesession.receive_event(data_dict)
             #     else:
             #         raise ('Client disconnected')
