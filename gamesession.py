@@ -15,6 +15,7 @@ class GameSession(threading.Thread):
         self.__sendCondition = threading.Condition()
         self.__lock = threading.RLock()
         self.__semaphore = threading.BoundedSemaphore(2)
+        self.__running = True
 
     @property
     def response(self):
@@ -33,7 +34,7 @@ class GameSession(threading.Thread):
         self.__semaphore.release()
 
     def run(self):
-        while True:
+        while self.__running:
             self.__recvEvent.wait()
             print('ran gamesession')
             with self.send_condition:
@@ -61,13 +62,17 @@ class GameSession(threading.Thread):
                 else:
                     if data_dict['command'] == 'RST':
                         self.__board.reset()
-                        self.__response = 'RST'
+                        self.__response = 'RST', data_dict['player_id']
+                if data_dict['command'] == 'QUT':
+                    self.__running = False
+                    self.__response = 'QUT', data_dict['player_id']
                 if self.__response is not None:
                     with self.__lock:
                         self.__data_queue = []
                         self.__recvEvent.clear()
                     self.__sendCondition.notify_all()
+        print('bye gamesession')
 
     def newplayer(self, player):
         self.__playerlist.append(player)
-        print(self.__playerlist)
+        # print(self.__playerlist)

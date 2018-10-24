@@ -16,3 +16,4 @@ class Client:
         self.__commClientObject.start()
         self.__gui.run()
         self.__window.close()
+        self.__socket.close()

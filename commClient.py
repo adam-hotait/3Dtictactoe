@@ -13,7 +13,6 @@ class CommClient(Thread):
 
     def run(self):
         running = True
-
         while running:
             for event in self.__commGUIObject.get_and_empty_GUI_events():
                 if event[0] == "QUT":
@@ -31,7 +30,6 @@ class CommClient(Thread):
 
             for event in self.receive_from_server():
                 if event[0] == "QUT":
-                    running = False
                     self.__commGUIObject.other_add_event(event)
                 elif event[0] == "RST":
                     self.__commGUIObject.other_add_event(event)
@@ -63,6 +61,7 @@ class CommClient(Thread):
                 if code == "QUT":
                     L.append("QUT")
                     p = p + 3
+                    running = False
                 elif code == "RST":
                     L.append("RST")
                     p = p + 3

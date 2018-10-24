@@ -4,6 +4,9 @@ from listentoclient import ListenToClient
 from sendtoclient import SendToClient
 from threading import Thread
 
+# DEBUG
+from threading import enumerate
+from time import sleep
 
 class Server(Thread):
     def __init__(self, host='', port=12800):
@@ -31,12 +34,15 @@ class Server(Thread):
                 self.gamesession.start()
             self.gamesession.newplayer(client)
             self.clientlisteners.append(ListenToClient(client, self.gamesession, len(self.clientlist)))
-            self.clientsenders.append(SendToClient(client, self.gamesession))
+            self.clientsenders.append(SendToClient(client, self.gamesession, len(self.clientlist)))
         for clientlistener in self.clientlisteners:
             clientlistener.start()
         for clientsender in self.clientsenders:
             clientsender.start()
         self.gamesession.join()
+        sleep(4)
+        print('out in server')
+        print(enumerate())
 
 
 if __name__ == "__main__":
