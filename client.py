@@ -28,7 +28,11 @@ class Client:
             self.__commClientObject = CommClient(self.__commGUIObject, self.__player, self.__socket)
             self.__gui = Gui3D(self.__commGUIObject, self.__window)
             self.__commClientObject.start()
-            self.__gui.run()
+            resp = self.__gui.run()
+            if resp == "MEN":
+                return "MEN"
+            elif resp == "QUT":
+                return "QUT"
 
     def close(self):
         if self.__socket:

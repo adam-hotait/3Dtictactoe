@@ -34,6 +34,9 @@ class Gui3D():
         self.__text_object_winner_1 = self.__font.render("Player 1 Won !!!", True, RED_DARK)
         self.__text_object_winner_2 = self.__font.render("Player 2 Won !!!", True, BLUE_DARK)
 
+        #Text for instructions for new game/return to menu
+        self.__font2 = pygame.font.SysFont("comicsansms", 20)
+        self.__text_object_instru_when_won = self.__font2.render("Press Enter to pay again, or Escape to go to the menu", True, PURPLE)
 
         
     def reset_board(self):
@@ -72,9 +75,14 @@ class Gui3D():
             
             #Events
             for event in pygame.event.get():
-                if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
+                if event.type == QUIT:
                     self.__commObject.gui_add_event(["QUT"])
-                    running = False
+                    return "QUT"
+                elif event.type == KEYDOWN and event.key == K_ESCAPE:
+                    self.__commObject.gui_add_event(["QUT"])
+                    return "MEN"
+                elif event.type == KEYDOWN and event.key == K_RETURN:
+                    self.__commObject.gui_add_event(["RST"])
                     
                 elif event.type == KEYDOWN and event.key == K_UP:
                     arrow_up = True
@@ -110,11 +118,13 @@ class Gui3D():
             #Checking the commands the Main thread could have sent
             for event in self.__commObject.get_and_empty_Main_events():
                 if event[0] == "QUT":
-                    running = False
+                    return "MEN"
                 elif event[0] == "SET":
                     self.set_token(event[1], event[2], event[3], event[4])
                 elif event[0] == "RST":
                     self.reset_board()
+                    winning_player = 0
+                    winning_line = []
                 elif event[0] == "WIN":
                     winning_player = event[1]
                     winning_line = event[2]
@@ -152,15 +162,21 @@ class Gui3D():
                 text_dim = self.__text_object_winner_1.get_size()
                 self.__screen.blit(
                     self.__text_object_winner_1,
-                    (((window_dim[0] - text_dim[0]) / 2),
-                    ((window_dim[1] - text_dim[1]) / 8)))
+                    (((window_dim[0] - text_dim[0]) // 2),
+                    ((window_dim[1] - text_dim[1]) // 8)))
             elif winning_player == 2:
                 text_dim = self.__text_object_winner_2.get_size()
                 self.__screen.blit(
                     self.__text_object_winner_2,
-                    (((window_dim[0] - text_dim[0]) / 2),
-                     ((window_dim[1] - text_dim[1]) / 8)))
+                    (((window_dim[0] - text_dim[0]) // 2),
+                     ((window_dim[1] - text_dim[1]) // 8)))
 
+            if winning_player != 0:
+                text_dim = self.__text_object_instru_when_won.get_size()
+                self.__screen.blit(
+                    self.__text_object_instru_when_won,
+                    (((window_dim[0] - text_dim[0]) // 2),
+                     (48 * (window_dim[1] - text_dim[1]) // 50)))
             pygame.display.flip()
             clock.tick(60)
         
