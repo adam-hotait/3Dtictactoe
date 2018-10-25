@@ -23,14 +23,26 @@ class TicTacToeMain():
             
             elif choice == "JOIN":
                 host = menu.server_address
-                Client(2, self.__window, host)
-                running = False
+                client = Client(2, self.__window, host)
+                resp = client.launch()
+                if resp == "MEN":
+                    pass
+                elif resp == "QUT":
+                    running = False
+                client.close()
 
             elif choice == "CREATE":
                 server = Server()
                 server.start()
-                Client(1, self.__window, 'localhost')
-                running = False
+                client = Client(1, self.__window, 'localhost')
+                resp = client.launch()
+                if resp == "MEN":
+                    pass
+                elif resp == "QUT":
+                    running = False
+                client.close()
+
+        self.__window.close()
 
 if __name__ == '__main__':
     TicTacToeMain()

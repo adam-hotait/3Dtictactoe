@@ -37,10 +37,9 @@ class ClientSideBoard:
         self.__cubes = None  # Will be initialized in the generate method
 
         self.__background = None
-        try:
-            self.__background = pygame.image.load("graphical/background_board.png")
-        except:
-            pass
+
+        self.__background = pygame.image.load("graphical/background_board.png")
+
 
         
     
@@ -90,7 +89,8 @@ class ClientSideBoard:
         """Draws the board on the screen. Optional parameter "selected" indicates which cube must be highlighted"""
         
         #Background
-        screen.blit(self.__background, (self.position, self.size))
+        scaled_background = pygame.transform.scale(self.__background, pygame.display.get_surface().get_size())
+        screen.blit(scaled_background, (self.position, self.size))
 
         
         #We put all cubes in a list
