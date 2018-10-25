@@ -81,7 +81,7 @@ class Gui3D():
                 elif event.type == KEYDOWN and event.key == K_ESCAPE:
                     self.__commObject.gui_add_event(["QUT"])
                     return "MEN"
-                elif event.type == KEYDOWN and event.key == K_RETURN:
+                elif event.type == KEYDOWN and event.key == K_RETURN and winning_player != 0:
                     self.__commObject.gui_add_event(["RST"])
                     
                 elif event.type == KEYDOWN and event.key == K_UP:
