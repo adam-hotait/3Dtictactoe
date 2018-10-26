@@ -36,7 +36,7 @@ class Gui3D():
 
         #Text for instructions for new game/return to menu
         self.__font2 = pygame.font.SysFont("comicsansms", 20)
-        self.__text_object_instru_when_won = self.__font2.render("Press Enter to pay again, or Escape to go to the menu", True, PURPLE)
+        self.__text_object_instru_when_won = self.__font2.render("Press Enter to play again, or Escape to go to the menu", True, PURPLE)
 
         
     def reset_board(self):
