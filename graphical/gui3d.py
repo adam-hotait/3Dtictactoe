@@ -3,6 +3,7 @@ from pygame.locals import *
 from .clientSideBoard import ClientSideBoard
 import numpy as np
 from .colors import *
+from .deconnectionScreen import DeconnectionScreen
 
 
 class Gui3D():
@@ -119,7 +120,8 @@ class Gui3D():
             for event in self.__commObject.get_and_empty_Main_events():
                 if event[0] == "QUT":
                     print("pret a quitter")
-                    return "MEN"
+                    resp = DeconnectionScreen(self.__window).launch()
+                    return resp
                 elif event[0] == "SET":
                     self.set_token(event[1], event[2], event[3], event[4])
                 elif event[0] == "RST":
