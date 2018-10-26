@@ -8,6 +8,7 @@ from threading import Thread
 from threading import enumerate
 from time import sleep
 
+
 class Server(Thread):
     def __init__(self, host='', port=12800):
         Thread.__init__(self)
@@ -30,8 +31,8 @@ class Server(Thread):
             client, address = self.sock.accept()
             self.clientlist.append(client)
             print(client)
-            if len(self.clientlist) == 1:
-                self.gamesession.start()
+            # if len(self.clientlist) == 1:
+            #     self.gamesession.start()
             self.gamesession.newplayer(client)
             self.clientlisteners.append(ListenToClient(client, self.gamesession, len(self.clientlist)))
             self.clientsenders.append(SendToClient(client, self.gamesession, len(self.clientlist)))
@@ -39,6 +40,7 @@ class Server(Thread):
             clientlistener.start()
         for clientsender in self.clientsenders:
             clientsender.start()
+        self.gamesession.start()
         self.gamesession.join()
         sleep(4)
         print('out in server')

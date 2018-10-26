@@ -12,6 +12,7 @@ class SendToClient(threading.Thread):
 
     def run(self):
         client_open = True
+        self.client.send(b'NEW')
         while client_open:
             with self.gamesession.send_condition:
                 self.gamesession.send_condition.wait()
@@ -28,7 +29,7 @@ class SendToClient(threading.Thread):
                                      .encode())
                 if code == 'QUT':
                     print('QUT')
-                    self.client.send('QUT')
+                    self.client.send(b'QUT')
                     if self.player_id == player_id:
                         self.client.shutdown(socket.SHUT_RDWR)
                         self.client.close()
