@@ -27,6 +27,9 @@ class SendToClient(threading.Thread):
                     i3, j3, k3 = self.gamesession.response[4]
                     self.client.send((''.join(str(e) for e in [code, player_id, i1, j1, k1, i2, j2, k2, i3, j3, k3]))
                                      .encode())
+                if code == 'RST':
+                    print('RST')
+                    self.client.send(b'RST')
                 if code == 'QUT':
                     print('QUT')
                     self.client.send(b'QUT')

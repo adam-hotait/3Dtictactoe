@@ -5,10 +5,6 @@ from sendtoclient import SendToClient
 from threading import Thread
 import select
 
-# DEBUG
-from threading import enumerate
-from time import sleep
-
 
 class Server(Thread):
     def __init__(self, host='', port=12800):
