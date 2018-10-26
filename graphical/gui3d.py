@@ -148,6 +148,8 @@ class Gui3D():
                 elif event[0] == "INV":
                     if self.__player == event[1]:
                         invited_player = True
+                    else:
+                        invited_player = False
             
             
             #Now we take care of the grid rotation
