@@ -39,6 +39,12 @@ class Gui3D():
         self.__font2 = pygame.font.SysFont("comicsansms", 20)
         self.__text_object_instru_when_won = self.__font2.render("Press Enter to play again, or Escape to go to the menu", True, PURPLE)
 
+        #Messages to invite a player to play
+        self.__text_object_invite_player_1 = self.__font2.render(
+            "Player 1, JUST DO IT !!!", True, RED)
+        self.__text_object_invite_player_2 = self.__font2.render(
+            "Player 2, JUST DO IT !!!", True, BLUE)
+
         
     def reset_board(self):
         """Removes all tokens"""
@@ -70,6 +76,8 @@ class Gui3D():
         
         winning_player = 0
         winning_line = []
+
+        invited_player = 0
         
         #Main Loop
         while running:
@@ -127,10 +135,14 @@ class Gui3D():
                     self.reset_board()
                     winning_player = 0
                     winning_line = []
+                    invited_player = 0
                 elif event[0] == "WIN":
                     winning_player = event[1]
                     winning_line = event[2]
                     self.__board.view.set_angles(2 * np.pi / 18, 2 * np.pi / 18)
+                    invited_player = 0
+                elif event[0] == "INV":
+                    invited_player = event[1]
             
             
             #Now we take care of the grid rotation
@@ -179,6 +191,20 @@ class Gui3D():
                     self.__text_object_instru_when_won,
                     (((window_dim[0] - text_dim[0]) // 2),
                      (48 * (window_dim[1] - text_dim[1]) // 50)))
+
+            if invited_player == 1:
+                text_dim = self.__text_object_invite_player_1.get_size()
+                self.__screen.blit(
+                    self.__text_object_invite_player_1,
+                    (((window_dim[0] - text_dim[0]) // 2),
+                     (48 * (window_dim[1] - text_dim[1]) // 50)))
+            elif invited_player == 2:
+                text_dim = self.__text_object_invite_player_1.get_size()
+                self.__screen.blit(
+                    self.__text_object_invite_player_1,
+                    (((window_dim[0] - text_dim[0]) // 2),
+                     (48 * (window_dim[1] - text_dim[1]) // 50)))
+
             pygame.display.flip()
             clock.tick(60)
         
