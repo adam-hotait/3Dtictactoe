@@ -118,6 +118,7 @@ class Gui3D():
             #Checking the commands the Main thread could have sent
             for event in self.__commObject.get_and_empty_Main_events():
                 if event[0] == "QUT":
+                    print("pret a quitter")
                     return "MEN"
                 elif event[0] == "SET":
                     self.set_token(event[1], event[2], event[3], event[4])

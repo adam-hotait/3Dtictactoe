@@ -30,7 +30,9 @@ class CommClient(Thread):
 
             for event in self.receive_from_server():
                 if event[0] == "QUT":
+                    print("bien recu")
                     self.__commGUIObject.other_add_event(event)
+                    running = False
                 elif event[0] == "RST":
                     self.__commGUIObject.other_add_event(event)
                 elif event[0] == "SET":
@@ -59,11 +61,10 @@ class CommClient(Thread):
                 print('len: ', len(resp))
                 code = resp[p:p+3]
                 if code == "QUT":
-                    L.append("QUT")
+                    L.append(["QUT"])
                     p = p + 3
-                    running = False
                 elif code == "RST":
-                    L.append("RST")
+                    L.append(["RST"])
                     p = p + 3
                 elif code == "SET":
                     L.append(["SET", int(resp[p+3]), int(resp[p+4]), int(resp[p+5]), int(resp[p+6])])
