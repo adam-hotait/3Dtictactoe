@@ -38,10 +38,11 @@ class GameSession(threading.Thread):
             self.__recvEvent.wait()
             print('ran gamesession')
             with self.send_condition:
-                self.__semaphore.acquire()
-                self.__semaphore.acquire()
+                self.__semaphore.acquire()  # Make sure sendtoclient is not using __response
+                self.__semaphore.acquire()  # Make sure the other sendtoclient is not using __response
+                # NB: 2 semaphores are used instead of 1 lock so that clients can simultaneously send __response
+
                 self.__response = None
-                print('ran inner loop')
                 with self.__lock:
                     data_dict = self.__data_queue.pop()
                     print('data dict ', data_dict)
@@ -51,6 +52,7 @@ class GameSession(threading.Thread):
                     if data_dict['command'] == 'CLK':
                         print('Entered CLK')
                         if data_dict['player_id'] == self.__current_player:
+                            print('Entered player id')
                             status, token_data = self.__board.set_token(data_dict['i'], data_dict['j'], data_dict['k'],
                                                                         data_dict['player_id'])
                             if status == 'WIN':
@@ -66,11 +68,17 @@ class GameSession(threading.Thread):
                 if data_dict['command'] == 'QUT':
                     self.__running = False
                     self.__response = 'QUT', data_dict['player_id']
+
+                self.__recvEvent.clear()
                 if self.__response is not None:
                     with self.__lock:
                         self.__data_queue = []
-                        self.__recvEvent.clear()
                     self.__sendCondition.notify_all()
+                else:
+                    # If the response is None, it won't be used by sendtoclient threads, we can release the semaphores
+                    self.__semaphore.release()
+                    self.__semaphore.release()
+
         print('bye gamesession')
 
     def newplayer(self, player):
