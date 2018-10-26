@@ -83,6 +83,7 @@ class ClientSideBoard:
             for j in range(3):
                 for k in range(3):
                     self.set_token(i, j, k, 0)
+        self.view = View()
     
     
     def draw(self, screen, selected=None, winning_player=0, winning_line = []):
