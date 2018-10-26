@@ -24,7 +24,8 @@ class DeconnectionScreen:
         self.__font = pygame.font.SysFont("comicsansms", 20)
         self.__text_lines = [
             "Connexion error",
-            "Return to menu in 5 seconds"
+            "Return to menu in 5 seconds",
+            "(Press Escape if you are in a hurry)"
         ]
 
         #Creation of the text objects
