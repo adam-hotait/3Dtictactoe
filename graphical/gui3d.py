@@ -119,7 +119,6 @@ class Gui3D():
             #Checking the commands the Main thread could have sent
             for event in self.__commObject.get_and_empty_Main_events():
                 if event[0] == "QUT":
-                    print("pret a quitter")
                     resp = DeconnectionScreen(self.__window).launch()
                     return resp
                 elif event[0] == "SET":
