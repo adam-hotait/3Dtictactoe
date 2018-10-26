@@ -9,12 +9,14 @@ from .deconnectionScreen import DeconnectionScreen
 class Gui3D():
     """Class for all the 3D GUI of the TicTacToe"""
     
-    def __init__(self, commObject, window):
+    def __init__(self, commObject, window, player):
         """Constructor. Default values of attributes (can be modified later)"""
 
         self.__window = window
 
         self.__screen = self.__window.screen
+
+        self.__player = player
         
         
         self.__commObject = commObject
@@ -40,10 +42,12 @@ class Gui3D():
         self.__text_object_instru_when_won = self.__font2.render("Press Enter to play again, or Escape to go to the menu", True, PURPLE)
 
         #Messages to invite a player to play
-        self.__text_object_invite_player_1 = self.__font2.render(
-            "Player 1, JUST DO IT !!!", True, RED)
-        self.__text_object_invite_player_2 = self.__font2.render(
-            "Player 2, JUST DO IT !!!", True, BLUE)
+        if self.__player == 1:
+            self.__text_object_invite_player = self.__font2.render(
+                "Player 1, your turn, JUST DO IT !!!", True, RED)
+        elif self.__player == 2:
+            self.__text_object_invite_player = self.__font2.render(
+            "Player 2, your turn, JUST DO IT !!!", True, BLUE)
 
         
     def reset_board(self):
@@ -77,7 +81,7 @@ class Gui3D():
         winning_player = 0
         winning_line = []
 
-        invited_player = 0
+        invited_player = False
         
         #Main Loop
         while running:
@@ -135,14 +139,15 @@ class Gui3D():
                     self.reset_board()
                     winning_player = 0
                     winning_line = []
-                    invited_player = 0
+                    invited_player = False
                 elif event[0] == "WIN":
                     winning_player = event[1]
                     winning_line = event[2]
                     self.__board.view.set_angles(2 * np.pi / 18, 2 * np.pi / 18)
                     invited_player = 0
                 elif event[0] == "INV":
-                    invited_player = event[1]
+                    if self.__player == event[1]:
+                        invited_player = True
             
             
             #Now we take care of the grid rotation
@@ -192,16 +197,10 @@ class Gui3D():
                     (((window_dim[0] - text_dim[0]) // 2),
                      (48 * (window_dim[1] - text_dim[1]) // 50)))
 
-            if invited_player == 1:
-                text_dim = self.__text_object_invite_player_1.get_size()
+            if invited_player:
+                text_dim = self.__text_object_invite_player.get_size()
                 self.__screen.blit(
-                    self.__text_object_invite_player_1,
-                    (((window_dim[0] - text_dim[0]) // 2),
-                     (48 * (window_dim[1] - text_dim[1]) // 50)))
-            elif invited_player == 2:
-                text_dim = self.__text_object_invite_player_1.get_size()
-                self.__screen.blit(
-                    self.__text_object_invite_player_1,
+                    self.__text_object_invite_player,
                     (((window_dim[0] - text_dim[0]) // 2),
                      (48 * (window_dim[1] - text_dim[1]) // 50)))
 

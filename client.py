@@ -26,7 +26,7 @@ class Client:
         elif resp == "NEW":
             self.__commGUIObject = CommWithGUI()
             self.__commClientObject = CommClient(self.__commGUIObject, self.__player, self.__socket)
-            self.__gui = Gui3D(self.__commGUIObject, self.__window)
+            self.__gui = Gui3D(self.__commGUIObject, self.__window, self.__player)
             self.__commClientObject.start()
             resp = self.__gui.run()
             self.__commClientObject.join()  # Ensures commClient sends 'QUT' to server before quitting
