@@ -133,6 +133,8 @@ class ClientSideBoard:
                     cube.draw(screen, self.cube_with_circle_color, self.position, self.size, self.circle_color)
                 else:
                     cube.draw(screen, self.cube_color, self.position, self.size)
+            elif winning_player == 3:
+                cube.draw(screen, self.cube_color, self.position, self.size)
 
 
     def point_on_a_cube(self, pos):
