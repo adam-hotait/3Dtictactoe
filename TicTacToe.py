@@ -36,8 +36,9 @@ class TicTacToeMain():
                 server.start()
                 client = Client(1, self.__window, 'localhost')
                 resp = client.launch()
+                server.set_waiting_false()  # Ensures servers quits at all time
                 if resp == "MEN":
-                    pass
+                    pass  # Return to menu
                 elif resp == "QUT":
                     running = False
                 client.close()
