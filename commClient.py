@@ -30,7 +30,6 @@ class CommClient(Thread):
 
             for event in self.receive_from_server():
                 if event[0] == "QUT":
-                    print("bien recu")
                     self.__commGUIObject.other_add_event(event)
                     running = False
                 elif event[0] == "RST":

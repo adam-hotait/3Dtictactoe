@@ -31,8 +31,6 @@ class Server(Thread):
             client, address = self.sock.accept()
             self.clientlist.append(client)
             print(client)
-            # if len(self.clientlist) == 1:
-            #     self.gamesession.start()
             self.gamesession.newplayer(client)
             self.clientlisteners.append(ListenToClient(client, self.gamesession, len(self.clientlist)))
             self.clientsenders.append(SendToClient(client, self.gamesession, len(self.clientlist)))
@@ -43,8 +41,10 @@ class Server(Thread):
         self.gamesession.start()
         self.gamesession.join()
         sleep(4)
+        self.sock.shutdown(socket.SHUT_RDWR)
+        self.sock.server.close()
         print('out in server')
-        print(enumerate())
+
 
 
 if __name__ == "__main__":

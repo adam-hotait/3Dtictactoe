@@ -30,10 +30,10 @@ class SendToClient(threading.Thread):
                 if code == 'QUT':
                     print('QUT')
                     self.client.send(b'QUT')
-                    if self.player_id == player_id:
-                        self.client.shutdown(socket.SHUT_RDWR)
-                        self.client.close()
-                        client_open = False
+                    # if self.player_id == player_id:
+                    self.client.shutdown(socket.SHUT_RDWR)
+                    self.client.close()
+                    client_open = False
                 self.gamesession.set_semaphore()
 
 
