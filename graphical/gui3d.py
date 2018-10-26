@@ -34,6 +34,7 @@ class Gui3D():
         self.__font = pygame.font.SysFont("comicsansms", 70)
         self.__text_object_winner_1 = self.__font.render("Player 1 Won !!!", True, RED_DARK)
         self.__text_object_winner_2 = self.__font.render("Player 2 Won !!!", True, BLUE_DARK)
+        self.__text_object_draw = self.__font.render("Aaaand it's a draw !", True, DARK_GRAY)
 
         #Text for instructions for new game/return to menu
         self.__font2 = pygame.font.SysFont("comicsansms", 20)
@@ -143,6 +144,9 @@ class Gui3D():
                     invited_player = 0
                 elif event[0] == "INV":
                     invited_player = event[1]
+                elif event[0] == "DRW":
+                    self.set_token(event[1], event[2], event[3], event[4])
+                    winning_player = 3
             
             
             #Now we take care of the grid rotation
@@ -182,6 +186,12 @@ class Gui3D():
                 text_dim = self.__text_object_winner_2.get_size()
                 self.__screen.blit(
                     self.__text_object_winner_2,
+                    (((window_dim[0] - text_dim[0]) // 2),
+                     ((window_dim[1] - text_dim[1]) // 8)))
+            elif winning_player == 3:
+                text_dim = self.__text_object_draw.get_size()
+                self.__screen.blit(
+                    self.__text_object_draw,
                     (((window_dim[0] - text_dim[0]) // 2),
                      ((window_dim[1] - text_dim[1]) // 8)))
 
