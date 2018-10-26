@@ -38,6 +38,8 @@ class CommClient(Thread):
                     self.__commGUIObject.other_add_event(event)
                 elif event[0] == "WIN":
                     self.__commGUIObject.other_add_event(event)
+                elif event[0] == "INV":
+                    self.__commGUIObject.other_add_event(event)
 
             sleep(0.1)
 
@@ -75,6 +77,9 @@ class CommClient(Thread):
                             (int(resp[p + 10]), int(resp[p + 11]), int(resp[p + 12]))
                         ]])
                     p = p + 13
+                elif code == "INV":
+                    L.append(["INV", int(resp[p + 3])])
+                    p += 4
             print(L)
         return L
 
