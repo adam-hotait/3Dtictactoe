@@ -19,9 +19,9 @@ class CommClient(Thread):
                     running = False
                     print('Envoi du client au serveur : b"QUT"')
                     self.__connexion_with_server.send(b"QUT")
-                elif event[0] == "NEW":
-                    print('Envoi du client au serveur : b"NEW"')
-                    self.__connexion_with_server.send(b"NEW")
+                elif event[0] == "RST":
+                    print('Envoi du client au serveur : b"RST"')
+                    self.__connexion_with_server.send(b"RST")
                 elif event[0] == "CLK":
                     if event[1]:
                         i, j, k = event[1]
