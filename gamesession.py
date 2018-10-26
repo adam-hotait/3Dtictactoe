@@ -25,6 +25,10 @@ class GameSession(threading.Thread):
     def send_condition(self):
         return self.__sendCondition
 
+    @property
+    def current_player(self):
+        return str(self.__current_player)
+
     def receive_event(self, data):
         with self.__lock:
             self.__data_queue.append(data)

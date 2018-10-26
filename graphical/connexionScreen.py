@@ -90,7 +90,7 @@ class ConnexionScreen:
             #Waiting for a message from server
             socket_ready, _, _ = select.select([self.__socket], [], [], 0)
             if len(socket_ready) > 0:
-                resp = self.__socket.recv(1024)
+                resp = self.__socket.recv(3)
                 if resp:
                     response = resp.decode()
                     if response == "NEW":

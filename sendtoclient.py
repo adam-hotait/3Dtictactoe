@@ -13,6 +13,7 @@ class SendToClient(threading.Thread):
     def run(self):
         client_open = True
         self.client.send(b'NEW')
+        self.client.send(('INV' + self.gamesession.current_player).encode())
         while client_open:
             with self.gamesession.send_condition:
                 self.gamesession.send_condition.wait()
@@ -21,6 +22,7 @@ class SendToClient(threading.Thread):
                 if code == 'SET':
                     i, j, k = self.gamesession.response[2]
                     self.client.send((''.join(str(e) for e in [code, player_id, i, j, k])).encode())
+                    self.client.send(('INV' + self.gamesession.current_player).encode())
                 if code == 'WIN':
                     i1, j1, k1 = self.gamesession.response[2]
                     i2, j2, k2 = self.gamesession.response[3]
@@ -38,5 +40,3 @@ class SendToClient(threading.Thread):
                     self.client.close()
                     client_open = False
                 self.gamesession.set_semaphore()
-
-
