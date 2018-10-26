@@ -29,6 +29,7 @@ class Client:
             self.__gui = Gui3D(self.__commGUIObject, self.__window)
             self.__commClientObject.start()
             resp = self.__gui.run()
+            self.__commClientObject.join()  # Ensures commClient sends 'QUT' to server before quitting
             if resp == "MEN":
                 return "MEN"
             elif resp == "QUT":
