@@ -7,7 +7,6 @@ class Board:
     def __init__(self):
         self.board = np.zeros((3, 3, 3), dtype=int)
         self.__win = False
-        self.__set_tokens_count = 0
 
     def reset(self):
         self.__init__()
@@ -23,7 +22,6 @@ class Board:
             # Checking for winning position before adding token on board to prevent zero division
             response = self.check_for_win_pos(i, j, k, player_id)
             self.board[i][j][k] = player_id
-            self.__set_tokens_count += 1
             return Board.format_response(response)
 
     def check_for_win_pos(self, i, j, k, player_id):
@@ -34,16 +32,15 @@ class Board:
                 scalar_product = np.dot(vectors[a], vectors[b]) \
                                  / (np.linalg.norm(vectors[a], 2) * np.linalg.norm(vectors[b], 2))
                 if np.isclose(scalar_product, 1) or np.isclose(scalar_product, -1):
+                    self.__win = True
                     return [True, new_token, vectors[a] + new_token, vectors[b] + new_token]
         return [False, new_token]
 
-    def format_response(self, response):
+    # Maybe put it in a utilities class?
+    @staticmethod
+    def format_response(response):
         if response[0]:  # if board has a winning position
-            self.__win = True
             return 'WIN', response[1:]
-        elif self.__set_tokens_count == 27:  # if board has a draw position
-            self.__win = True  # Put the board in a 'winning' position to allow for RST
-            return 'DRW', response[1:]
         else:
             return 'SET', response[1:]
 
