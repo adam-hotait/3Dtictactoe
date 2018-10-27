@@ -5,7 +5,7 @@ class Board:
     """This class is the 3D tic-tac-toe board."""
 
     def __init__(self):
-        self.board = np.zeros((3, 3, 3), dtype=int)
+        self.__board = np.zeros((3, 3, 3), dtype=int)
         self.__win = False
 
     def reset(self):
@@ -16,17 +16,17 @@ class Board:
         return self.__win
 
     def set_token(self, i, j, k, player_id):
-        if self.board[i][j][k] != 0:
+        if self.__board[i][j][k] != 0:
             raise Exception("Occupied space")
         else:
             # Checking for winning position before adding token on board to prevent zero division
             response = self.check_for_win_pos(i, j, k, player_id)
-            self.board[i][j][k] = player_id
+            self.__board[i][j][k] = player_id
             return Board.format_response(response)
 
     def check_for_win_pos(self, i, j, k, player_id):
         new_token = np.array([i, j, k])
-        vectors = (np.argwhere(self.board == player_id)) - new_token
+        vectors = (np.argwhere(self.__board == player_id)) - new_token
         for a in range(0, len(vectors)):
             for b in range(a + 1, len(vectors)):
                 scalar_product = np.dot(vectors[a], vectors[b]) \

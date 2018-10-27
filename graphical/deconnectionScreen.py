@@ -1,20 +1,18 @@
 from .colors import *
 import pygame
 from pygame.locals import *
-import socket
-import select
+
 
 class DeconnectionScreen:
     """This class represent the waiting screen where the players must wait the other is ready"""
 
     def __init__(self, window):
-        """Creates the connexion screen"""
+        """Creates the connection screen"""
 
         self.__window = window
         self.__back_color = BLUE
         self.__rect_color = RED
         self.__text_color = GREEN
-
 
         w, h = window.get_dimension()
         rect_w = 500
@@ -28,7 +26,7 @@ class DeconnectionScreen:
             "(Press Escape if you are in a hurry)"
         ]
 
-        #Creation of the text objects
+        # Creation of the text objects
         lines = len(self.__text_lines)
         self.__text_objects = [self.__font.render(line, True, self.__text_color) for line in self.__text_lines]
         self.__text_lines_positions = []
@@ -42,7 +40,6 @@ class DeconnectionScreen:
             last_y_pos += line_height + 20
             self.__text_lines_positions.append((position_x, position_y))
 
-
     def launch(self):
         """Launches the connexion screen"""
         print("go")
@@ -50,15 +47,14 @@ class DeconnectionScreen:
         init_time = pygame.time.get_ticks()
 
         while pygame.time.get_ticks() - init_time < 5000:
-            #Events
+            # Events
             for event in pygame.event.get():
                 if event.type == QUIT:
                     return "QUT"
                 elif event.type == KEYDOWN and event.key == K_ESCAPE:
                     return "MEN"
 
-
-            #Drawing
+            # Drawing
             self.__window.screen.fill(self.__back_color)
             pygame.draw.rect(self.__window.screen, self.__rect_color, self.__rectangle)
             for k in range(len(self.__text_objects)):

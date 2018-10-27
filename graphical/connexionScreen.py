@@ -4,6 +4,7 @@ from pygame.locals import *
 import socket
 import select
 
+
 class ConnexionScreen:
     """This class represent the waiting screen where the players must wait the other is ready"""
 
@@ -17,15 +18,15 @@ class ConnexionScreen:
         self.__text_color = GREEN
         self.__isInviting = isInviting
 
-        #Find our IP
+        # Find our IP
         if isInviting:
-            self.__ip =self.get_ip()
+            self.__ip = self.get_ip()
 
         w, h = window.get_dimension()
         rect_w = 500
         rect_h = 300
 
-        self.__rectangle = pygame.rect.Rect(int((w - rect_w)/2), int((h - rect_h)/2), rect_w, rect_h)
+        self.__rectangle = pygame.rect.Rect(int((w - rect_w) / 2), int((h - rect_h) / 2), rect_w, rect_h)
         self.__font = pygame.font.SysFont("comicsansms", 20)
         if isInviting and not self.__ip == "127.0.0.1":
             self.__text_lines = [
@@ -45,7 +46,7 @@ class ConnexionScreen:
                 "Press Escape to go back"
             ]
 
-        #Creation of the text objects
+        # Creation of the text objects
         lines = len(self.__text_lines)
         self.__text_objects = [self.__font.render(line, True, self.__text_color) for line in self.__text_lines]
         self.__text_lines_positions = []
@@ -58,8 +59,6 @@ class ConnexionScreen:
             position_y = self.__rectangle.y + last_y_pos + 10 + line_height + 10
             last_y_pos += line_height + 20
             self.__text_lines_positions.append((position_x, position_y))
-
-
 
     def get_ip(self):
         """Finds this client's IP"""
@@ -80,14 +79,14 @@ class ConnexionScreen:
         clock = pygame.time.Clock()
 
         while running:
-            #Events
+            # Events
             for event in pygame.event.get():
                 if event.type == QUIT:
                     return "QUT"
                 elif event.type == KEYDOWN and event.key == K_ESCAPE:
                     return "MEN"
 
-            #Waiting for a message from server
+            # Waiting for a message from server
             socket_ready, _, _ = select.select([self.__socket], [], [], 0)
             if len(socket_ready) > 0:
                 resp = self.__socket.recv(3)
@@ -96,13 +95,12 @@ class ConnexionScreen:
                     if response == "NEW":
                         return "NEW"
                     elif response == "QUT":
-                        return "MEN" #Return to menu (rather than quitting)
+                        return "MEN"  # Return to menu (rather than quitting)
 
-            #Drawing
+            # Drawing
             self.__window.screen.fill(self.__back_color)
             pygame.draw.rect(self.__window.screen, self.__rect_color, self.__rectangle)
             for k in range(len(self.__text_objects)):
                 self.__window.screen.blit(self.__text_objects[k], self.__text_lines_positions[k])
                 pygame.display.flip()
             clock.tick(60)
-

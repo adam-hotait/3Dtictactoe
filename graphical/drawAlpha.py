@@ -1,4 +1,4 @@
-#Just a few functions to draw shapes with alpha trasparency (which the pygame draw function does not do
+# Just a few functions to draw shapes with alpha transparency (which the pygame draw function does not do)
 import pygame
 
 
@@ -22,7 +22,7 @@ class DrawAlpha:
         if len(color) < 4:
             pygame.draw.polygon(screen, color, points)
         else:
-            #We must create a rectangular surface to contain the polygon
+            # We must create a rectangular surface to contain the polygon
             min_x = float('inf')
             min_y = float('inf')
             max_x = -float('inf')
@@ -37,17 +37,16 @@ class DrawAlpha:
                 if point[1] > max_y:
                     max_y = point[1]
              
-            #Transformation in integers:
+            # Transformation in integers:
             min_x, min_y, max_x, max_y = map(int, [min_x, min_y, max_x, max_y])
             
             surface = pygame.Surface((max_x - min_x, max_y - min_y))
             surface.set_colorkey((0, 0, 0))
             surface.set_alpha(color[3])
-            #Translation of the points to be in the surface:
+            # Translation of the points to be in the surface:
             new_points = []
             for point in points:
                 new_points.append((point[0] - min_x, point[1] - min_y))
             
             pygame.draw.polygon(surface, color, new_points)
             screen.blit(surface, (min_x, min_y))
-            
