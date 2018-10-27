@@ -19,29 +19,21 @@ class Menu:
         # Creation of the menu options
 
         # Join option
-        join_option = MenuOption()
-        join_option.text = "Join Server"
-        join_option.return_text = "JOIN"
-        join_option.position = int((3 / 4) * w), int((1 / 20) * h)
-        join_option.size = int((1 / 6) * w), int((1 / 20) * h)
+        join_option = MenuOption("Join Server", "JOIN", (int((3 / 4) * w), int((1 / 20) * h)), (int((1 / 6) * w), int((1 / 20) * h)))
 
         # Create option
-        create_option = MenuOption()
-        create_option.text = "Create Server"
-        create_option.return_text = "CREATE"
-        create_option.position = int((3 / 4) * w), int((2.5 / 20) * h)
-        create_option.size = int((1 / 6) * w), int((1 / 20) * h)
+        create_option = MenuOption("Create Server", "CREATE", (int((3 / 4) * w), int((2.5 / 20) * h)), (int((1 / 6) * w), int((1 / 20) * h)))
 
         # Quit option
-        quit_option = MenuOption()
-        quit_option.text = "Quit"
-        quit_option.return_text = "QUIT"
-        quit_option.position = int((3 / 4) * w), int((4 / 20) * h)
-        quit_option.size = int((1 / 6) * w), int((1 / 20) * h)
+        quit_option = MenuOption("Quit", "QUIT", (int((3 / 4) * w), int((4 / 20) * h)), (int((1 / 6) * w), int((1 / 20) * h)))
 
         self.__options = [join_option, create_option, quit_option]
 
-        self.server_address = None
+        self.__server_address = None
+
+    @property
+    def server_address(self):
+        return self.__server_address
 
     def __get_selected_rectangle(self, pos):
         """Returns the rectangle which contains the point pos = (posx, posy). Returns -1 if no rectangle contains it."""
@@ -116,21 +108,19 @@ class Menu:
                 
                 w, h = self.__window.get_dimension()
 
-                inputBox = InputAddress()
-                inputBox.position = (
+                position = (
                     int((1 / 3) * w),
                     int((1 / 20) * h))
-                inputBox.size = (
-                    int((w - inputBox.position[0]) / 2),
-                    int((h - inputBox.position[1]) / 2))
-                inputBox.generate()
+                size = (
+                    int((w - position[0]) / 2),
+                    int((h - position[1]) / 2))
+                inputBox = InputAddress(position, size)
 
                 selected_rect = -1
 
                 ip_entered = False
                 go_back_to_menu = False
 
-                clicked = None
                 clock2 = pygame.time.Clock()
 
                 while (not ip_entered) and (not go_back_to_menu):
@@ -151,10 +141,10 @@ class Menu:
                                 if return_text == "RETURN":
                                     go_back_to_menu = True
                                 elif return_text == "LH":
-                                    self.server_address = "127.0.0.1"
+                                    self.__server_address = "127.0.0.1"
                                     ip_entered = True
                                 elif return_text == "OK":
-                                    self.server_address = inputBox.get_input_text()
+                                    self.__server_address = inputBox.get_input_text()
                                     ip_entered = True
 
                         elif event.type == KEYDOWN and event.key == K_UP:
@@ -178,13 +168,13 @@ class Menu:
                                 if return_text == "RETURN":
                                     go_back_to_menu = True
                                 elif return_text == "LH":
-                                    self.server_address = "127.0.0.1"
+                                    self.__server_address = "127.0.0.1"
                                     ip_entered = True
                                 elif return_text == "OK":
-                                    self.server_address = inputBox.get_input_text()
+                                    self.__server_address = inputBox.get_input_text()
                                     ip_entered = True
                             else:
-                                self.server_address = inputBox.get_input_text()
+                                self.__server_address = inputBox.get_input_text()
                                 ip_entered = True
 
                         elif event.type == KEYDOWN and event.key == K_BACKSPACE:

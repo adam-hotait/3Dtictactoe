@@ -10,7 +10,12 @@ class Window:
         pygame.init()
         pygame.display.set_caption("Tic Tac Toe")
 
-        self.screen = pygame.display.set_mode(window_dimension)
+        self.__screen = pygame.display.set_mode(window_dimension)
+
+    @property
+    def screen(self):
+        """Returns the screen"""
+        return self.__screen
 
     def get_events(self):
         """Returns events in the queue"""

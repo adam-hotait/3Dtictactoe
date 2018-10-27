@@ -13,7 +13,6 @@ class Gui3D:
         """Constructor. Default values of attributes (can be modified later)"""
 
         self.__window = window
-        self.__screen = self.__window.screen
         self.__player = player
         self.__commObject = comm_object
         self.__board = ClientSideBoard()
@@ -168,32 +167,32 @@ class Gui3D:
 
             # Now we draw everything
 
-            self.__screen.fill((0, 0, 0))
-            self.__board.draw(self.__screen, selected_cube, winning_player, winning_line)
+            self.__window.screen.fill((0, 0, 0))
+            self.__board.draw(self.__window.screen, selected_cube, winning_player, winning_line)
             window_dim = self.__window.get_dimension()
             if winning_player == 1:
                 text_dim = self.__text_object_winner_1.get_size()
-                self.__screen.blit(
+                self.__window.screen.blit(
                     self.__text_object_winner_1,
                     (((window_dim[0] - text_dim[0]) // 2),
                      ((window_dim[1] - text_dim[1]) // 8)))
             elif winning_player == 2:
                 text_dim = self.__text_object_winner_2.get_size()
-                self.__screen.blit(
+                self.__window.screen.blit(
                     self.__text_object_winner_2,
                     (((window_dim[0] - text_dim[0]) // 2),
                      ((window_dim[1] - text_dim[1]) // 8)))
 
             if winning_player != 0:
                 text_dim = self.__text_object_instru_when_won.get_size()
-                self.__screen.blit(
+                self.__window.screen.blit(
                     self.__text_object_instru_when_won,
                     (((window_dim[0] - text_dim[0]) // 2),
                      (48 * (window_dim[1] - text_dim[1]) // 50)))
 
             if invited_player:
                 text_dim = self.__text_object_invite_player.get_size()
-                self.__screen.blit(
+                self.__window.screen.blit(
                     self.__text_object_invite_player,
                     (((window_dim[0] - text_dim[0]) // 2),
                      (48 * (window_dim[1] - text_dim[1]) // 50)))
