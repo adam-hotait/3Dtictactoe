@@ -59,12 +59,15 @@ class GameSession(threading.Thread):
                             print('Entered player id')
                             status, token_data = self.__board.set_token(data_dict['i'], data_dict['j'], data_dict['k'],
                                                                         data_dict['player_id'])
-                            if status == 'WIN':
-                                self.__response = status, data_dict['player_id'], token_data[0], token_data[1], token_data[2]
+                            if status == 'ERR':
+                                print('Cube already occupied')
                             else:
-                                self.__response = status, data_dict['player_id'], token_data[0]
-                                print('self.__response : ', self.__response)
-                            self.__current_player = (self.__current_player + 2) % 2 + 1
+                                if status == 'WIN':
+                                    self.__response = status, data_dict['player_id'], token_data[0], token_data[1], token_data[2]
+                                else:
+                                    self.__response = status, data_dict['player_id'], token_data[0]
+                                    print('self.__response : ', self.__response)
+                                self.__current_player = (self.__current_player + 2) % 2 + 1
                 else:
                     if data_dict['command'] == 'RST':
                         self.__board.reset()

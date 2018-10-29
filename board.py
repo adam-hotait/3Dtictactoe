@@ -17,7 +17,7 @@ class Board:
 
     def set_token(self, i, j, k, player_id):
         if self.__board[i][j][k] != 0:
-            raise Exception("Occupied space")
+            return 'ERR', 'NoToken'
         else:
             # Checking for winning position before adding token on board to prevent zero division
             response = self.check_for_win_pos(i, j, k, player_id)
