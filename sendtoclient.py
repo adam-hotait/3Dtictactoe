@@ -32,6 +32,7 @@ class SendToClient(threading.Thread):
                 if code == 'RST':
                     print('RST')
                     self.__client.send(b'RST')
+                    self.__client.send(('INV' + self.__gamesession.current_player).encode())
                 if code == 'QUT':
                     print('QUT')
                     self.__client.send(b'QUT')
