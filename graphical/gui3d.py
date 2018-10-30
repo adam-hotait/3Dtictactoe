@@ -9,12 +9,13 @@ from .deconnectionScreen import DeconnectionScreen
 class Gui3D:
     """Class for all the 3D GUI of the TicTacToe"""
 
-    def __init__(self, comm_object, window, player):
+    def __init__(self, comm_object, window, player, comm_object2=None):
         """Constructor. Default values of attributes (can be modified later)"""
 
         self.__window = window
-        self.__player = player
+        self.__player = player  # 0 if local 2 player
         self.__commObject = comm_object
+        self.__commObject2 = comm_object2  # Only useful in local 2 player
         self.__board = ClientSideBoard()
         self.__board.size = window.get_dimension()
         self.__board.position = 0, 0
@@ -41,6 +42,11 @@ class Gui3D:
                 "Player 1, your turn, JUST DO IT !!!", True, RED)
         elif self.__player == 2:
             self.__text_object_invite_player = self.__font2.render(
+                "Player 2, your turn, JUST DO IT !!!", True, BLUE)
+        elif self.__player == 0:
+            self.__text_object_invite_player1 = self.__font2.render(
+                "Player 1, your turn, JUST DO IT !!!", True, RED)
+            self.__text_object_invite_player2 = self.__font2.render(
                 "Player 2, your turn, JUST DO IT !!!", True, BLUE)
 
     def reset_board(self):
@@ -73,7 +79,7 @@ class Gui3D:
         winning_player = 0
         winning_line = []
 
-        invited_player = False
+        invited_player = 0
 
         # Main Loop
         while running:
@@ -118,7 +124,13 @@ class Gui3D:
                         new_mouse_pos = event.pos
 
                 elif event.type == MOUSEBUTTONUP and event.button == 1:
-                    self.__commObject.gui_add_event(["CLK", selected_cube])
+                    if self.__player > 0:
+                        self.__commObject.gui_add_event(["CLK", selected_cube])
+                    else:
+                        if invited_player == 1:
+                            self.__commObject.gui_add_event(["CLK", selected_cube])
+                        elif invited_player == 2:
+                            self.__commObject2.gui_add_event(["CLK", selected_cube])
 
             # Checking the commands the Main thread could have sent
             for event in self.__commObject.get_and_empty_Main_events():
@@ -131,17 +143,18 @@ class Gui3D:
                     self.reset_board()
                     winning_player = 0
                     winning_line = []
-                    invited_player = False
+                    invited_player = 0
                 elif event[0] == "WIN":
                     winning_player = event[1]
                     winning_line = event[2]
                     self.__board.view.set_angles(2 * np.pi / 18, 2 * np.pi / 18)
                     invited_player = 0
                 elif event[0] == "INV":
-                    if self.__player == event[1]:
-                        invited_player = True
-                    else:
-                        invited_player = False
+                    invited_player = event[1]
+
+            # If local 2 player, no need to listen to the 2nd commClient, we just empty it
+            if self.__player == 0:
+                self.__commObject2.get_and_empty_Main_events()
 
             # Now we take care of the grid rotation
             new_timer = pygame.time.get_ticks()
@@ -190,12 +203,25 @@ class Gui3D:
                     (((window_dim[0] - text_dim[0]) // 2),
                      (48 * (window_dim[1] - text_dim[1]) // 50)))
 
-            if invited_player:
+            if self.__player > 0 and invited_player == self.__player:
                 text_dim = self.__text_object_invite_player.get_size()
                 self.__window.screen.blit(
                     self.__text_object_invite_player,
                     (((window_dim[0] - text_dim[0]) // 2),
                      (48 * (window_dim[1] - text_dim[1]) // 50)))
+            elif self.__player == 0 and invited_player == 1:
+                text_dim = self.__text_object_invite_player1.get_size()
+                self.__window.screen.blit(
+                    self.__text_object_invite_player1,
+                    (((window_dim[0] - text_dim[0]) // 2),
+                     (48 * (window_dim[1] - text_dim[1]) // 50)))
+            elif self.__player == 0 and invited_player == 2:
+                text_dim = self.__text_object_invite_player2.get_size()
+                self.__window.screen.blit(
+                    self.__text_object_invite_player2,
+                    (((window_dim[0] - text_dim[0]) // 2),
+                     (48 * (window_dim[1] - text_dim[1]) // 50)))
+
 
             pygame.display.flip()
             clock.tick(60)

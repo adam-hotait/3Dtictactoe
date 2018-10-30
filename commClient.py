@@ -5,10 +5,9 @@ import select
 
 class CommClient(Thread):
 
-    def __init__(self, commGUIObject, player, connexion_with_server):
+    def __init__(self, commGUIObject, connexion_with_server):
         Thread.__init__(self)
         self.__commGUIObject = commGUIObject
-        self.__player = player
         self.__connexion_with_server = connexion_with_server
 
     def run(self):
@@ -58,8 +57,6 @@ class CommClient(Thread):
             print('resp : ', resp)
             p = 0
             while p < len(resp):
-                print('p: ', p)
-                print('len: ', len(resp))
                 code = resp[p:p+3]
                 if code == "QUT":
                     L.append(["QUT"])
@@ -80,6 +77,8 @@ class CommClient(Thread):
                 elif code == "INV":
                     L.append(["INV", int(resp[p + 3])])
                     p += 4
+                elif code == "NEW":
+                    p = p + 3
             print(L)
         return L
 

@@ -2,6 +2,7 @@ from server import Server
 from client import Client
 from graphical.window import Window
 from graphical.menu import Menu
+from doubleClient import DoubleClient
 
 class TicTacToeMain():
     """Main class of the program, displays menu then launches client and server"""
@@ -42,6 +43,19 @@ class TicTacToeMain():
                 elif resp == "QUT":
                     running = False
                 client.close()
+
+            elif choice == "LOCAL":
+                server = Server()
+                server.start()
+                clients = DoubleClient(self.__window, 'localhost')
+                resp = clients.launch()
+                server.set_waiting_false()  # Ensures servers quits at all time
+                if resp == "MEN":
+                    pass  # Return to menu
+                elif resp == "QUT":
+                    running = False
+                clients.close()
+
 
         self.__window.close()
 

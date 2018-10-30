@@ -18,16 +18,19 @@ class Menu:
 
         # Creation of the menu options
 
+        #Local 2 players option
+        local_option = MenuOption("Local 2 player", "LOCAL", (int((3 / 4) * w), int((1 / 20) * h)), (int((1 / 6) * w), int((1 / 20) * h)))
+
         # Join option
-        join_option = MenuOption("Join Server", "JOIN", (int((3 / 4) * w), int((1 / 20) * h)), (int((1 / 6) * w), int((1 / 20) * h)))
+        join_option = MenuOption("Join Server", "JOIN", (int((3 / 4) * w), int((2.5 / 20) * h)), (int((1 / 6) * w), int((1 / 20) * h)))
 
         # Create option
-        create_option = MenuOption("Create Server", "CREATE", (int((3 / 4) * w), int((2.5 / 20) * h)), (int((1 / 6) * w), int((1 / 20) * h)))
+        create_option = MenuOption("Create Server", "CREATE", (int((3 / 4) * w), int((4 / 20) * h)), (int((1 / 6) * w), int((1 / 20) * h)))
 
         # Quit option
-        quit_option = MenuOption("Quit", "QUIT", (int((3 / 4) * w), int((4 / 20) * h)), (int((1 / 6) * w), int((1 / 20) * h)))
+        quit_option = MenuOption("Quit", "QUIT", (int((3 / 4) * w), int((5.5 / 20) * h)), (int((1 / 6) * w), int((1 / 20) * h)))
 
-        self.__options = [join_option, create_option, quit_option]
+        self.__options = [local_option, join_option, create_option, quit_option]
 
         self.__server_address = None
 
