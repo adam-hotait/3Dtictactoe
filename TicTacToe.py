@@ -1,4 +1,4 @@
-from server import Server
+from server_side.server import Server
 from client import Client
 from graphical.window import Window
 from graphical.menu import Menu

@@ -15,6 +15,7 @@ class SendToClient(threading.Thread):
         self.__player_id = player_id
 
     def run(self):
+        print('SendToClient instance started for player {}.'.format(self.__player_id))
         client_open = True
         self.__client.send(b'NEW')
         self.__client.send(('INV' + self.__game_session.current_player).encode())
@@ -34,13 +35,12 @@ class SendToClient(threading.Thread):
                     self.__client.send((''.join(str(e) for e in [code, player_id, i1, j1, k1, i2, j2, k2, i3, j3, k3]))
                                        .encode())
                 if code == 'RST':
-                    print('RST')
                     self.__client.send(b'RST')
                     self.__client.send(('INV' + self.__game_session.current_player).encode())
                 if code == 'QUT':
-                    print('QUT')
                     self.__client.send(b'QUT')
                     self.__client.shutdown(socket.SHUT_RDWR)
                     self.__client.close()
                     client_open = False
                 self.__game_session.set_semaphore()
+        print('SendToClient instance exited for player {}.'.format(self.__player_id))

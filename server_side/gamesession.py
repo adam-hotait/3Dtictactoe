@@ -1,5 +1,5 @@
 import threading
-from board import Board
+from .board import Board
 
 
 class GameSession(threading.Thread):
@@ -38,6 +38,8 @@ class GameSession(threading.Thread):
         # another action
         self.__semaphore = threading.BoundedSemaphore(2)
 
+        print('Game session created')
+
     @property
     def response(self):
         return self.__response
@@ -59,6 +61,7 @@ class GameSession(threading.Thread):
         self.__semaphore.release()
 
     def run(self):
+        print('Game session started')
         while self.__running:
             self.__recvEvent.wait()  # Wait for a message incoming from a player
             with self.send_condition:
@@ -70,6 +73,7 @@ class GameSession(threading.Thread):
                 with self.__lock:
                     data_dict = self.__data_queue.pop()  # We take the latest command received
 
+                print('Now processing message: {}'.format(data_dict))
                 # If the game hasn't been won, the command is a play on a cube and it is from the current player...
                 # (NB: if it is not the current player's turn, the command will be ignored)
                 if not self.__board.win and\
@@ -88,7 +92,6 @@ class GameSession(threading.Thread):
                             self.__response = status, data_dict['player_id'], token_data[0], token_data[1], token_data[2]
                         else:
                             self.__response = status, data_dict['player_id'], token_data[0]
-                            print('self.__response : ', self.__response)
                         # Switch the current player
                         self.__current_player = (self.__current_player + 2) % 2 + 1
 
@@ -109,9 +112,12 @@ class GameSession(threading.Thread):
                 if self.__response is not None:
                     with self.__lock:
                         self.__data_queue = []
+                    print('The command was legit. Now sending response: {}'.format(self.response))
                     self.__sendCondition.notify_all()
                 else:
                     # If the response is None, it won't be used by 'SendToClient' threads, we can release the semaphores
+                    print('The message {} was illegal. Discarding.'.format(data_dict))
                     self.__semaphore.release()
                     self.__semaphore.release()
+        print('Game session exited.')
 

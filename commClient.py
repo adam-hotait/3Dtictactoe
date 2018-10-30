@@ -54,7 +54,6 @@ class CommClient(Thread):
         if resp:
             print("Reception par le client : ", resp)
             resp = resp.decode()
-            print('resp : ', resp)
             p = 0
             while p < len(resp):
                 code = resp[p:p+3]
@@ -79,7 +78,6 @@ class CommClient(Thread):
                     p += 4
                 elif code == "NEW":
                     p = p + 3
-            print(L)
         return L
 
 

@@ -9,18 +9,17 @@ class ListenToClient(threading.Thread):
     """
     def __init__(self, client, game_session, player_id):
         super().__init__()
-        print('init')
         self.__client = client
         self.__game_session = game_session
         self.__player_id = player_id
 
     def run(self):
+        print('ListenToClient instance started for player {}.'.format(self.__player_id))
         client_open = True
         while client_open:
             try:
                 data = self.__client.recv(1024)
                 if data:
-                    print('recv client: ', data)
                     data = data.decode()
                     data_dict = dict(player_id=self.__player_id)
                     data_dict["command"] = data[0:3]
@@ -32,3 +31,4 @@ class ListenToClient(threading.Thread):
             except socket.error:
                 print("Player {} disconnected".format(self.__player_id))
                 client_open = False
+        print('ListenToClient instance exited for player {}.'.format(self.__player_id))

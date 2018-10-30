@@ -1,7 +1,7 @@
 import socket
-from gamesession import GameSession
-from listentoclient import ListenToClient
-from sendtoclient import SendToClient
+from .gamesession import GameSession
+from .listentoclient import ListenToClient
+from .sendtoclient import SendToClient
 from threading import Thread
 import select
 
@@ -39,6 +39,8 @@ class Server(Thread):
         # while the server is waiting for an incoming connection
         self.__waiting = True
 
+        print('Server initialised')
+
     def set_waiting_false(self):
         """
         Method that allows to put the server out of its initial waiting class from outside the class.
@@ -47,11 +49,14 @@ class Server(Thread):
 
     def run(self):
         self.__sock.listen(self.__max_clients)  # The server listens to connection requests
+        print('Server running and listening on port {}'.format(self.__port))
         while len(self.__client_list) < self.__max_clients and self.__waiting:
             connection_in_queue, wlist, xlist = select.select([self.__sock], [], [], 0.05)
             for connection in connection_in_queue:  # If there is a connection request
                 client, address = connection.accept()  # Accept the request
                 self.__client_list.append(client)
+
+                print('Connected to client at address: {}'.format(address))
 
                 # Summon a 'SendToClient' and a 'ListenToClient' instance to communicate with this client
                 self.__client_listeners.append(ListenToClient(client, self.game_session, len(self.__client_list)))
@@ -63,12 +68,16 @@ class Server(Thread):
             # We start all threads and join the game session.
             for client_listener in self.__client_listeners:
                 client_listener.start()
+                print('Started all listeners')
             for client_sender in self.__client_senders:
                 client_sender.start()
+                print('Started all senders')
             self.game_session.start()
+            print('Started game session. Now joining it...')
             self.game_session.join()
         # At the end of the thread execution, the server can be stopped.
         self.__sock.close()
+        print('Server closed.')
 
 
 if __name__ == "__main__":
