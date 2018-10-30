@@ -8,11 +8,12 @@ from graphical.inputAddress import InputAddress
 class Menu:
     """Main menu of our game"""
 
-    def __init__(self, window):
+    def __init__(self, window, sound_object):
 
         self.__window = window
         self.__fond = pygame.image.load("graphical/menu.jpg").convert()
         self.__fond = pygame.transform.scale(self.__fond, window.get_dimension())
+        self.__sound_object = sound_object
 
         w, h = window.get_dimension()  # width and height of the window
 
@@ -27,10 +28,14 @@ class Menu:
         # Create option
         create_option = MenuOption("Create Server", "CREATE", (int((3 / 4) * w), int((4 / 20) * h)), (int((1 / 6) * w), int((1 / 20) * h)))
 
-        # Quit option
-        quit_option = MenuOption("Quit", "QUIT", (int((3 / 4) * w), int((5.5 / 20) * h)), (int((1 / 6) * w), int((1 / 20) * h)))
+        # Music option
+        music_option = MenuOption("Toggle music", "MUSIC", (int((3 / 4) * w), int((5.5 / 20) * h)),
+                                   (int((1 / 6) * w), int((1 / 20) * h)))
 
-        self.__options = [local_option, join_option, create_option, quit_option]
+        # Quit option
+        quit_option = MenuOption("Quit", "QUIT", (int((3 / 4) * w), int((7 / 20) * h)), (int((1 / 6) * w), int((1 / 20) * h)))
+
+        self.__options = [local_option, join_option, create_option, music_option, quit_option]
 
         self.__server_address = None
 
@@ -72,6 +77,7 @@ class Menu:
                         clicked = self.__get_selected_rectangle(event.pos)
                         if clicked > -1:
                             running = False
+                            self.__sound_object.player_1()
                     elif event.type == KEYDOWN and event.key == K_UP:
                         if selected_rect == -1:
                             selected_rect = 0
@@ -90,6 +96,7 @@ class Menu:
                         if selected_rect > -1:
                             clicked = selected_rect
                             running = False
+                            self.__sound_object.player_1()
 
                 # Display
                 self.__window.screen.fill((0, 0, 0))
@@ -140,6 +147,7 @@ class Menu:
                             clicked = inputBox.cursor_on_button(event.pos)
                             if clicked > -1:
                                 # A button has been clicked on
+                                self.__sound_object.player_1()
                                 return_text = inputBox.get_button_mesage_from_index(clicked)
                                 if return_text == "RETURN":
                                     go_back_to_menu = True
@@ -166,6 +174,7 @@ class Menu:
                                 selected_rect += 1
                         elif event.type == KEYDOWN and event.key == K_RETURN:
                             if selected_rect > -1:
+                                self.__sound_object.player_1()
                                 # A button has been selected and entered
                                 return_text = inputBox.get_button_mesage_from_index(selected_rect)
                                 if return_text == "RETURN":
@@ -200,5 +209,7 @@ class Menu:
                     return "JOIN"
 
             # If the clicked button was not "join":
+            elif clicked_option.return_text == "MUSIC":
+                self.__sound_object.toggle()
             else:
                 return clicked_option.return_text

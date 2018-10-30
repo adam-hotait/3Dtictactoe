@@ -7,12 +7,13 @@ from graphical.deconnectionScreen import DeconnectionScreen
 
 
 class Client:
-    def __init__(self, player, window, host = 'localhost', port = 12800):
-        self._player = player
+    def __init__(self, player, window, sound_object, host = 'localhost', port = 12800):
+        self.__player = player
         self._window = window
         self._host = host
         self._port = port
         self.__socket = None
+        self._sound_object = sound_object
 
     def launch(self):
 
@@ -20,7 +21,7 @@ class Client:
             print("client lance")
             self.__socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.__socket.connect((self._host, self._port))
-            connexionScreen = ConnexionScreen(self._window, self.__socket, self._player == 1)
+            connexionScreen = ConnexionScreen(self._window, self.__socket, self.__player == 1)
             resp = connexionScreen.launch()
             if resp == "MEN":
                 return "MEN"
@@ -29,7 +30,7 @@ class Client:
             elif resp == "NEW":
                 commGUIObject = CommWithGUI()
                 commClientObject = CommClient(commGUIObject, self.__socket)
-                gui = Gui3D(commGUIObject, self._window, self._player)
+                gui = Gui3D(commGUIObject, self._window, self.__player, self._sound_object)
                 commClientObject.start()
                 resp = gui.run()
                 commClientObject.join()  # Ensures commClient sends 'QUT' to server before quitting

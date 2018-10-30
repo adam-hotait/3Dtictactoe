@@ -8,9 +8,9 @@ from graphical.deconnectionScreen import DeconnectionScreen
 class DoubleClient(Client):
     """Class to make 2 players play in same window"""
 
-    def __init__(self, window, host = 'localhost', port = 12800):
+    def __init__(self, window, sound_object, host = 'localhost', port = 12800):
         """Constructor"""
-        Client.__init__(self, 0, window, host, port)
+        Client.__init__(self, 0, window, sound_object, host, port)
 
     def launch(self):
         """Launches the client"""
@@ -31,7 +31,7 @@ class DoubleClient(Client):
             commClientObject2 = CommClient(commGUIObject2, mysocket2)
             commClientObject2.start()
 
-            gui = Gui3D(commGUIObject1, self._window, 0, commGUIObject2)
+            gui = Gui3D(commGUIObject1, self._window, 0, self._sound_object, commGUIObject2)
             resp = gui.run()
 
             commClientObject1.join()

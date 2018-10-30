@@ -9,11 +9,12 @@ from .deconnectionScreen import DeconnectionScreen
 class Gui3D:
     """Class for all the 3D GUI of the TicTacToe"""
 
-    def __init__(self, comm_object, window, player, comm_object2=None):
+    def __init__(self, comm_object, window, player, sound_object, comm_object2=None):
         """Constructor. Default values of attributes (can be modified later)"""
 
         self.__window = window
         self.__player = player  # 0 if local 2 player
+        self.__sound_object = sound_object
         self.__commObject = comm_object
         self.__commObject2 = comm_object2  # Only useful in local 2 player
         self.__board = ClientSideBoard()
@@ -139,16 +140,27 @@ class Gui3D:
                     return resp
                 elif event[0] == "SET":
                     self.set_token(event[1], event[2], event[3], event[4])
+                    if event[1] == 1:
+                        self.__sound_object.player_1()
+                    elif event[1] == 2:
+                        self.__sound_object.player_2()
                 elif event[0] == "RST":
                     self.reset_board()
                     winning_player = 0
                     winning_line = []
                     invited_player = 0
+                    self.__sound_object.play()
                 elif event[0] == "WIN":
                     winning_player = event[1]
                     winning_line = event[2]
                     self.__board.view.set_angles(2 * np.pi / 18, 2 * np.pi / 18)
                     invited_player = 0
+                    if self.__player == 0:
+                        self.__sound_object.victory()
+                    elif winning_player == self.__player:
+                        self.__sound_object.victory()
+                    else:
+                        self.__sound_object.defeat()
                 elif event[0] == "INV":
                     invited_player = event[1]
 
