@@ -46,7 +46,7 @@ class DoubleClient(Client):
             elif resp == "QUT":
                 return "QUT"
 
-        except:
+        except OSError:
             resp = DeconnectionScreen(self._window).launch()
 
             return resp
