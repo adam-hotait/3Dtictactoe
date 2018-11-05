@@ -5,6 +5,10 @@ from .sendtoclient import SendToClient
 from threading import Thread
 import select
 
+# Error handling imports
+import errno
+import sys
+
 
 class Server(Thread):
     """
@@ -24,7 +28,14 @@ class Server(Thread):
         self.__port = port
         self.__sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.__sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        self.__sock.bind((self.__host, self.__port))
+
+        try:
+            self.__sock.bind((self.__host, self.__port))
+        except socket.error as error:
+            print('Server bind error.')
+            if error.errno == errno.EADDRINUSE:
+                print('Address already in use (maybe something else is running on port {})'.format(self.__port))
+            sys.exit(1)
 
         # Initialisation of client related objects
         self.__client_list = []  # List of clients socket connections
