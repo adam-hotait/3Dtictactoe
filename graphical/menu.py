@@ -183,8 +183,10 @@ class Menu:
                                     self.__server_address = "127.0.0.1"
                                     ip_entered = True
                                 elif return_text == "OK":
+                                    print("OK")
                                     self.__server_address = inputBox.get_input_text()
                                     ip_entered = True
+
                             else:
                                 self.__server_address = inputBox.get_input_text()
                                 ip_entered = True

@@ -1,6 +1,7 @@
 import pygame
 from graphical.colors import *
 from graphical.menuOption import MenuOption
+import re
 
 
 class InputAddress(pygame.sprite.Sprite):
@@ -15,7 +16,7 @@ class InputAddress(pygame.sprite.Sprite):
         self.__input_back_color = BLACK
         self.__display_text = "Please enter the server IP, or click localhost"
         self.__input_text = " "
-        self.__font = pygame.font.SysFont("comicsansms", 15)
+        self.__font = pygame.font.SysFont("comicsansms", 12)
 
         #Generation of the elements of the window
 
@@ -71,6 +72,12 @@ class InputAddress(pygame.sprite.Sprite):
 
         self.__buttons = [self.__ok_button, self.__lh_button, self.__quit_button]
 
+        #Not-an-IP text
+        self.__not_ip_object = self.__font.render("This does not look like an IP", True, self.__text_color)
+        self.__not_ip_position = int(
+            self.__position[0] + (self.__size[0] - self.__not_ip_object.get_width()) / 2), int(
+            self.__position[1] + (25 / 30) * self.__size[1])
+
     def __update(self):
         self.__input_text_object = self.__font.render(self.__input_text, True, self.__text_color)
         self.__input_text_position = (
@@ -88,7 +95,7 @@ class InputAddress(pygame.sprite.Sprite):
         self.__update()
 
     def get_input_text(self):
-        return self.__input_text
+        return self.__input_text.strip()
 
     def get_number_buttons(self):
         return len(self.__buttons)
@@ -104,6 +111,12 @@ class InputAddress(pygame.sprite.Sprite):
                 return k
         return -1
 
+    def __valid_ip(self):
+        return not (self.__input_text.strip().upper() != "LOCALHOST" and not re.match('^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)[.]'
+                                                   + '(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)[.]'
+                                                   + '(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)[.]'
+                                                   + '(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$', self.__input_text.strip()))
+
     def draw(self, screen, selected_button):
 
         pygame.draw.rect(screen, self.__rectangle_color, self.__big_rect)
@@ -118,3 +131,5 @@ class InputAddress(pygame.sprite.Sprite):
                 button.draw(screen, True)
             else:
                 button.draw(screen, False)
+        if not self.__valid_ip():
+            screen.blit(self.__not_ip_object, self.__not_ip_position)
