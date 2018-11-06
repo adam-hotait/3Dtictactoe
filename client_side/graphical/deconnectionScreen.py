@@ -42,7 +42,6 @@ class DeconnectionScreen:
 
     def launch(self):
         """Launches the connexion screen"""
-        print("go")
         clock = pygame.time.Clock()
         init_time = pygame.time.get_ticks()
 

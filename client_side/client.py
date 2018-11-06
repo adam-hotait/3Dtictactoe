@@ -25,7 +25,6 @@ class Client:
 
     def launch(self):
         try:
-            print("client lance")
             self.__socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.__socket.connect((self._host, self._port))
             connexionScreen = ConnexionScreen(self._window, self.__socket, self.__player == 1)

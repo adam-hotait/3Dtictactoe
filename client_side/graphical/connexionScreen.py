@@ -74,7 +74,6 @@ class ConnexionScreen:
 
     def launch(self):
         """Launches the connexion screen"""
-        print("go")
         running = True
         clock = pygame.time.Clock()
 

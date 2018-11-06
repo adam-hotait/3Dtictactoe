@@ -107,7 +107,6 @@ class ClientSideBoard:
 
     def set_token(self, i, j, k, token):
         """Sets a token in the (i, j, k) cube"""
-        print("set_token = ({},{},{}), with {}".format(i, j, k, token))
         self.__cubes[k][j][i].token = token
 
     def reset(self):
