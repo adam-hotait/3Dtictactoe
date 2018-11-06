@@ -3,9 +3,11 @@ from client_side.graphical.colors import *
 
 
 class MenuOption(pygame.sprite.Sprite):
+    """Class that represent a button in the menu"""
 
     def __init__(self, text, option_text, position, size, text_color = WHITE, rectangle_color = BLACK,
                  selected_color = GREEN, font=None):
+        """Constructor"""
         pygame.sprite.Sprite.__init__(self)
 
         self.__text = text
@@ -34,6 +36,7 @@ class MenuOption(pygame.sprite.Sprite):
         return self.__return_text
 
     def update(self):
+        """Updates the text objects and position"""
         # Sprite calculation
         self.__text_object = self.__font.render(self.__text, True, self.__text_color)
         self.__rect_object = pygame.Rect(self.__position[0], self.__position[1], self.__size[0], self.__size[1])
@@ -43,6 +46,7 @@ class MenuOption(pygame.sprite.Sprite):
                 self.__size[1] - text_h) / 2
 
     def draw(self, screen, is_selected):
+        """Draws the button"""
 
         self.update()
 
@@ -55,6 +59,7 @@ class MenuOption(pygame.sprite.Sprite):
         screen.blit(self.__text_object, self.__text_position)
 
     def point_in_rectangle(self, point):
+        """Tells if the cursor is on a button"""
 
         if point[0] >= self.__position[0] and point[1] >= self.__position[1] and point[0] <= self.__position[0] + self.__size[
             0] and point[1] <= self.__position[1] + self.__size[1]:

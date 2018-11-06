@@ -76,9 +76,9 @@ class Cube:
     def draw(self, screen, color, pos, size, token_color=WHITE):  # Position and size of the board in the window
         """Draws the cube on the screen, with the given color (handles alpha)"""
 
-        projeted_points = []
+        projected_points = []
         for point in self.__rotated_points:
-            projeted_points.append((
+            projected_points.append((
                 int(point[0][0] + pos[0] + (1 / 2) * size[0]),
                 int(point[1][0] + pos[1] + (1 / 2) * size[1])))
         projected_center = (
@@ -94,17 +94,17 @@ class Cube:
         # Let's find the 3 faces that this point touches
         faces = []
         if closest_point_index in (0, 1, 2, 3):
-            faces.append((projeted_points[0], projeted_points[1], projeted_points[2], projeted_points[3]))
+            faces.append((projected_points[0], projected_points[1], projected_points[2], projected_points[3]))
         else:
-            faces.append((projeted_points[4], projeted_points[5], projeted_points[6], projeted_points[7]))
+            faces.append((projected_points[4], projected_points[5], projected_points[6], projected_points[7]))
         if closest_point_index in (0, 1, 5, 4):
-            faces.append((projeted_points[0], projeted_points[1], projeted_points[5], projeted_points[4]))
+            faces.append((projected_points[0], projected_points[1], projected_points[5], projected_points[4]))
         else:
-            faces.append((projeted_points[2], projeted_points[6], projeted_points[7], projeted_points[3]))
+            faces.append((projected_points[2], projected_points[6], projected_points[7], projected_points[3]))
         if closest_point_index in (1, 2, 6, 5):
-            faces.append((projeted_points[1], projeted_points[2], projeted_points[6], projeted_points[5]))
+            faces.append((projected_points[1], projected_points[2], projected_points[6], projected_points[5]))
         else:
-            faces.append((projeted_points[0], projeted_points[4], projeted_points[7], projeted_points[3]))
+            faces.append((projected_points[0], projected_points[4], projected_points[7], projected_points[3]))
 
         # Let's print them !
         for face in faces:
@@ -113,99 +113,99 @@ class Cube:
         # Let's find the 9 edges that can be visible:
         if closest_point_index == 0:
             edges = [
-                (projeted_points[0], projeted_points[1]),
-                (projeted_points[0], projeted_points[3]),
-                (projeted_points[0], projeted_points[4]),
-                (projeted_points[2], projeted_points[3]),
-                (projeted_points[4], projeted_points[7]),
-                (projeted_points[3], projeted_points[7]),
-                (projeted_points[4], projeted_points[5]),
-                (projeted_points[1], projeted_points[5]),
-                (projeted_points[1], projeted_points[2])
+                (projected_points[0], projected_points[1]),
+                (projected_points[0], projected_points[3]),
+                (projected_points[0], projected_points[4]),
+                (projected_points[2], projected_points[3]),
+                (projected_points[4], projected_points[7]),
+                (projected_points[3], projected_points[7]),
+                (projected_points[4], projected_points[5]),
+                (projected_points[1], projected_points[5]),
+                (projected_points[1], projected_points[2])
             ]
         elif closest_point_index == 1:
             edges = [
-                (projeted_points[0], projeted_points[1]),
-                (projeted_points[0], projeted_points[3]),
-                (projeted_points[0], projeted_points[4]),
-                (projeted_points[2], projeted_points[3]),
-                (projeted_points[4], projeted_points[5]),
-                (projeted_points[1], projeted_points[5]),
-                (projeted_points[1], projeted_points[2]),
-                (projeted_points[6], projeted_points[5]),
-                (projeted_points[6], projeted_points[2])
+                (projected_points[0], projected_points[1]),
+                (projected_points[0], projected_points[3]),
+                (projected_points[0], projected_points[4]),
+                (projected_points[2], projected_points[3]),
+                (projected_points[4], projected_points[5]),
+                (projected_points[1], projected_points[5]),
+                (projected_points[1], projected_points[2]),
+                (projected_points[6], projected_points[5]),
+                (projected_points[6], projected_points[2])
             ]
         elif closest_point_index == 2:
             edges = [
-                (projeted_points[0], projeted_points[1]),
-                (projeted_points[0], projeted_points[3]),
-                (projeted_points[2], projeted_points[3]),
-                (projeted_points[3], projeted_points[7]),
-                (projeted_points[1], projeted_points[5]),
-                (projeted_points[1], projeted_points[2]),
-                (projeted_points[6], projeted_points[7]),
-                (projeted_points[6], projeted_points[5]),
-                (projeted_points[6], projeted_points[2])
+                (projected_points[0], projected_points[1]),
+                (projected_points[0], projected_points[3]),
+                (projected_points[2], projected_points[3]),
+                (projected_points[3], projected_points[7]),
+                (projected_points[1], projected_points[5]),
+                (projected_points[1], projected_points[2]),
+                (projected_points[6], projected_points[7]),
+                (projected_points[6], projected_points[5]),
+                (projected_points[6], projected_points[2])
             ]
         elif closest_point_index == 3:
             edges = [
-                (projeted_points[0], projeted_points[1]),
-                (projeted_points[0], projeted_points[3]),
-                (projeted_points[0], projeted_points[4]),
-                (projeted_points[2], projeted_points[3]),
-                (projeted_points[4], projeted_points[7]),
-                (projeted_points[3], projeted_points[7]),
-                (projeted_points[1], projeted_points[2]),
-                (projeted_points[6], projeted_points[7]),
-                (projeted_points[6], projeted_points[2])
+                (projected_points[0], projected_points[1]),
+                (projected_points[0], projected_points[3]),
+                (projected_points[0], projected_points[4]),
+                (projected_points[2], projected_points[3]),
+                (projected_points[4], projected_points[7]),
+                (projected_points[3], projected_points[7]),
+                (projected_points[1], projected_points[2]),
+                (projected_points[6], projected_points[7]),
+                (projected_points[6], projected_points[2])
             ]
         elif closest_point_index == 4:
             edges = [
-                (projeted_points[0], projeted_points[1]),
-                (projeted_points[0], projeted_points[3]),
-                (projeted_points[0], projeted_points[4]),
-                (projeted_points[4], projeted_points[7]),
-                (projeted_points[3], projeted_points[7]),
-                (projeted_points[4], projeted_points[5]),
-                (projeted_points[1], projeted_points[5]),
-                (projeted_points[6], projeted_points[7]),
-                (projeted_points[6], projeted_points[5]),
+                (projected_points[0], projected_points[1]),
+                (projected_points[0], projected_points[3]),
+                (projected_points[0], projected_points[4]),
+                (projected_points[4], projected_points[7]),
+                (projected_points[3], projected_points[7]),
+                (projected_points[4], projected_points[5]),
+                (projected_points[1], projected_points[5]),
+                (projected_points[6], projected_points[7]),
+                (projected_points[6], projected_points[5]),
             ]
         elif closest_point_index == 5:
             edges = [
-                (projeted_points[0], projeted_points[1]),
-                (projeted_points[0], projeted_points[4]),
-                (projeted_points[4], projeted_points[7]),
-                (projeted_points[4], projeted_points[5]),
-                (projeted_points[1], projeted_points[5]),
-                (projeted_points[1], projeted_points[2]),
-                (projeted_points[6], projeted_points[7]),
-                (projeted_points[6], projeted_points[5]),
-                (projeted_points[6], projeted_points[2])
+                (projected_points[0], projected_points[1]),
+                (projected_points[0], projected_points[4]),
+                (projected_points[4], projected_points[7]),
+                (projected_points[4], projected_points[5]),
+                (projected_points[1], projected_points[5]),
+                (projected_points[1], projected_points[2]),
+                (projected_points[6], projected_points[7]),
+                (projected_points[6], projected_points[5]),
+                (projected_points[6], projected_points[2])
             ]
         elif closest_point_index == 6:
             edges = [
-                (projeted_points[2], projeted_points[3]),
-                (projeted_points[4], projeted_points[7]),
-                (projeted_points[3], projeted_points[7]),
-                (projeted_points[4], projeted_points[5]),
-                (projeted_points[1], projeted_points[5]),
-                (projeted_points[1], projeted_points[2]),
-                (projeted_points[6], projeted_points[7]),
-                (projeted_points[6], projeted_points[5]),
-                (projeted_points[6], projeted_points[2])
+                (projected_points[2], projected_points[3]),
+                (projected_points[4], projected_points[7]),
+                (projected_points[3], projected_points[7]),
+                (projected_points[4], projected_points[5]),
+                (projected_points[1], projected_points[5]),
+                (projected_points[1], projected_points[2]),
+                (projected_points[6], projected_points[7]),
+                (projected_points[6], projected_points[5]),
+                (projected_points[6], projected_points[2])
             ]
-        elif closest_point_index == 7:
+        else:
             edges = [
-                (projeted_points[0], projeted_points[3]),
-                (projeted_points[0], projeted_points[4]),
-                (projeted_points[2], projeted_points[3]),
-                (projeted_points[4], projeted_points[7]),
-                (projeted_points[3], projeted_points[7]),
-                (projeted_points[4], projeted_points[5]),
-                (projeted_points[6], projeted_points[7]),
-                (projeted_points[6], projeted_points[5]),
-                (projeted_points[6], projeted_points[2])
+                (projected_points[0], projected_points[3]),
+                (projected_points[0], projected_points[4]),
+                (projected_points[2], projected_points[3]),
+                (projected_points[4], projected_points[7]),
+                (projected_points[3], projected_points[7]),
+                (projected_points[4], projected_points[5]),
+                (projected_points[6], projected_points[7]),
+                (projected_points[6], projected_points[5]),
+                (projected_points[6], projected_points[2])
             ]
         # Now we draw them
         for edge in edges:

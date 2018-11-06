@@ -8,7 +8,9 @@ import re
 
 
 class Client:
+    """Class that represent a player in the game"""
     def __init__(self, player, window, sound_object, host='localhost', port=12800):
+        """Constructor"""
         if not(type(port) == int and 0 <= port <= 65535):
             raise ValueError("Port not valid")
         if not(host == 'localhost' or re.match('^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)[.]'
@@ -24,6 +26,7 @@ class Client:
         self._sound_object = sound_object
 
     def launch(self):
+        """Connects the player to the server then launches the game"""
         try:
             self.__socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.__socket.connect((self._host, self._port))
@@ -50,5 +53,6 @@ class Client:
             return resp
 
     def close(self):
+        """Closes conection"""
         if self.__socket:
             self.__socket.close()

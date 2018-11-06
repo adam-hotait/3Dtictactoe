@@ -9,6 +9,7 @@ class Menu:
     """Main menu of our game"""
 
     def __init__(self, window, sound_object):
+        """Constructor"""
 
         self.__window = window
         try:
@@ -46,6 +47,7 @@ class Menu:
 
     @property
     def server_address(self):
+        """Returns the server address"""
         return self.__server_address
 
     def __get_selected_rectangle(self, pos):
@@ -57,6 +59,7 @@ class Menu:
         return -1
 
     def get_choice(self):
+        """Main function of the menu, waits for the player to input his choice and asks for IP if necessary"""
 
         choice_not_done = True
 

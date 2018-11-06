@@ -24,42 +24,51 @@ class Sound:
             self.__not_initialized = True
 
     def play(self):
+        """Plays music"""
         pygame.mixer.stop()
         if not self.__is_muted:
             pygame.mixer.music.play(-1)
 
     def victory(self):
+        """Plays ictory music"""
         pygame.mixer.music.stop()
         if not self.__is_muted:
             self.__victory_music.play()
 
     def defeat(self):
+        """Plays defeat music"""
         pygame.mixer.music.stop()
         if not self.__is_muted:
             self.__defeat_music.play()
 
     def player_1(self):
+        """Plays player 1 click sound"""
         if not self.__is_muted:
             self.__selection_player_1.play()
 
     def player_2(self):
+        """Plays player 2 click sound"""
         if not self.__is_muted:
             self.__selection_player_1.play()
 
     def stop(self):
+        """Stops music"""
         pygame.mixer.music.stop()
 
     def mute(self):
+        """Mutes sounds and music"""
         pygame.mixer.stop()
         pygame.mixer.music.stop()
         self.__is_muted = True
 
     def unmute(self):
+        """Unmutes sounds and music"""
         if not self.__not_initialized:
             self.__is_muted = False
             pygame.mixer.music.play(-1)
 
     def toggle(self):
+        """Toggles if music is muted or not"""
         if self.__is_muted:
             self.unmute()
         else:

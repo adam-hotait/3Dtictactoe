@@ -4,13 +4,16 @@ import select
 
 
 class CommClient(Thread):
+    """Class that let client and server communicate"""
 
     def __init__(self, commGUIObject, connexion_with_server):
+        """Constructor"""
         Thread.__init__(self)
         self.__commGUIObject = commGUIObject
         self.__connexion_with_server = connexion_with_server
 
     def run(self):
+        """Function that will run in background and send messages to GUI or server"""
         running = True
         while running:
             for event in self.__commGUIObject.get_and_empty_GUI_events():
@@ -40,6 +43,7 @@ class CommClient(Thread):
             sleep(0.1)
 
     def receive_from_server(self):
+        """Gets messages from server"""
 
         # Let's see if the server wants to send us something
         socket_ready, _, _ = select.select([self.__connexion_with_server], [], [], 0.05)

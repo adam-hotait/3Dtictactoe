@@ -28,7 +28,7 @@ class View:
         elif axis == 2:  # Rotation of axis z:
             return np.matrix((
                 (np.cos(angle), -np.sin(angle), 0),
-                (np.sin(angle), np.cos(angle), 0)
+                (np.sin(angle), np.cos(angle), 0),
                 (0, 0, 1)))
 
     def rotate(self, axis, angle):

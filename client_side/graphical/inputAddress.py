@@ -5,8 +5,10 @@ import re
 
 
 class InputAddress(pygame.sprite.Sprite):
+    """Pop-up window for IP address input"""
 
     def __init__(self, position, size):
+        """Constructor"""
         pygame.sprite.Sprite.__init__(self)
         self.__position = position
         self.__size = size
@@ -79,31 +81,38 @@ class InputAddress(pygame.sprite.Sprite):
             self.__position[1] + (25 / 30) * self.__size[1])
 
     def __update(self):
+        """Updates the input text object"""
         self.__input_text_object = self.__font.render(self.__input_text, True, self.__text_color)
         self.__input_text_position = (
             int(self.__input_rect.x + (self.__input_rect.w - self.__input_text_object.get_width()) / 2),
             int(self.__input_rect.y + (self.__input_rect.h - self.__input_text_object.get_height()) / 2))
 
     def addChar(self, char):
+        """Adds a character to the input text"""
         self.__input_text += char
         self.__update()
 
     def removeChar(self):
+        """Removes a character from the input text"""
         self.__input_text = self.__input_text[:-1]
         if len(self.__input_text) == 0:
             self.__input_text = " "
         self.__update()
 
     def get_input_text(self):
+        """Returns the input text"""
         return self.__input_text.strip()
 
     def get_number_buttons(self):
+        """Returns the number of buttons"""
         return len(self.__buttons)
 
     def get_button_mesage_from_index(self, index):
+        """Returns the message of a button from its index"""
         return self.__buttons[index].return_text
 
     def cursor_on_button(self, click_pos):
+        """Return on which button the cursor is"""
 
         for k in range(len(self.__buttons)):
             button = self.__buttons[k]
@@ -112,12 +121,14 @@ class InputAddress(pygame.sprite.Sprite):
         return -1
 
     def __valid_ip(self):
+        """Tells if the input text is a valid IP"""
         return not (self.__input_text.strip().upper() != "LOCALHOST" and not re.match('^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)[.]'
                                                    + '(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)[.]'
                                                    + '(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)[.]'
                                                    + '(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$', self.__input_text.strip()))
 
     def draw(self, screen, selected_button):
+        """Draws the pop-up window"""
 
         pygame.draw.rect(screen, self.__rectangle_color, self.__big_rect)
         screen.blit(self.__display_text_object, self.__display_text_position)
