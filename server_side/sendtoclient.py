@@ -15,7 +15,7 @@ class SendToClient(threading.Thread):
         self.__player_id = player_id
 
     def run(self):
-        print('SendToClient instance started for player {}.'.format(self.__player_id))
+        print('SERVER: SendToClient instance started for player {}.'.format(self.__player_id))
         client_open = True
         self.__client.send(b'NEW')
         self.__client.send(('INV' + self.__game_session.current_player).encode())
@@ -43,4 +43,4 @@ class SendToClient(threading.Thread):
                     self.__client.close()
                     client_open = False
                 self.__game_session.set_semaphore()
-        print('SendToClient instance exited for player {}.'.format(self.__player_id))
+        print('SERVER: SendToClient instance exited for player {}.'.format(self.__player_id))

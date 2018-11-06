@@ -14,7 +14,7 @@ class ListenToClient(threading.Thread):
         self.__player_id = player_id
 
     def run(self):
-        print('ListenToClient instance started for player {}.'.format(self.__player_id))
+        print('SERVER: ListenToClient instance started for player {}.'.format(self.__player_id))
         client_open = True
         while client_open:
             try:
@@ -29,6 +29,6 @@ class ListenToClient(threading.Thread):
                         data_dict["k"] = int(data[5])
                     self.__game_session.receive_event(data_dict)
             except socket.error:
-                print("Player {} disconnected".format(self.__player_id))
+                print("SERVER: Player {} disconnected".format(self.__player_id))
                 client_open = False
-        print('ListenToClient instance exited for player {}.'.format(self.__player_id))
+        print('SERVER: ListenToClient instance exited for player {}.'.format(self.__player_id))
