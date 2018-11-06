@@ -7,13 +7,21 @@ class Sound:
     def __init__(self):
         """Constructor"""
 
-        pygame.mixer.music.load("client_side/sound/Tetris.mp3")
-        pygame.mixer.music.set_volume(0.5)
-        self.__victory_music = pygame.mixer.Sound("client_side/sound/victory.wav")
-        self.__defeat_music = pygame.mixer.Sound("client_side/sound/defeat.wav")
-        self.__selection_player_1 = pygame.mixer.Sound("client_side/sound/selection_player_1.wav")
-        self.__selection_player_2 = pygame.mixer.Sound("client_side/sound/selection_player_2.wav")
-        self.__is_muted = False
+        try:
+            pygame.mixer.music.load("client_side/sound/Tetris.mp3")
+            pygame.mixer.music.set_volume(0.5)
+
+            self.__victory_music = pygame.mixer.Sound("client_side/sound/victory.wav")
+            self.__defeat_music = pygame.mixer.Sound("client_side/sound/defeat.wav")
+            self.__selection_player_1 = pygame.mixer.Sound("client_side/sound/selection_player_1.wav")
+            self.__selection_player_2 = pygame.mixer.Sound("client_side/sound/selection_player_2.wav")
+            self.__is_muted = False
+            self.__not_initialized = False
+        except FileNotFoundError as e:
+            print("Error with sound files, continuing anyway")
+            print(e)
+            self.__is_muted = True
+            self.__not_initialized = True
 
     def play(self):
         pygame.mixer.stop()
@@ -47,8 +55,9 @@ class Sound:
         self.__is_muted = True
 
     def unmute(self):
-        self.__is_muted = False
-        pygame.mixer.music.play(-1)
+        if not self.__not_initialized:
+            self.__is_muted = False
+            pygame.mixer.music.play(-1)
 
     def toggle(self):
         if self.__is_muted:

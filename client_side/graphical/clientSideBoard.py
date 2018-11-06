@@ -23,7 +23,12 @@ class ClientSideBoard:
         self.__space_between_cubes = 1  # Fraction of the cubes' size
         self.__cubes = None  # Will be initialized in the generate method
         self.__background = None
-        self.__background = pygame.image.load("client_side/graphical/background_board.png")
+        try:
+            self.__background = pygame.image.load("client_side/graphical/background_board.png")
+        except FileNotFoundError as e:
+            print("Could not open background_board.png, continuing anyway")
+            print(e)
+            self.__background = None
 
     @property
     def position(self):
@@ -121,8 +126,9 @@ class ClientSideBoard:
             winning_line = []
 
         # Background
-        scaled_background = pygame.transform.scale(self.__background, pygame.display.get_surface().get_size())
-        screen.blit(scaled_background, (self.__position, self.__size))
+        if self.__background:
+            scaled_background = pygame.transform.scale(self.__background, pygame.display.get_surface().get_size())
+            screen.blit(scaled_background, (self.__position, self.__size))
 
         # We put all cubes in a list
         cubes = []

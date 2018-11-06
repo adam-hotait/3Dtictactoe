@@ -17,8 +17,9 @@ class TicTacToeMain():
         try:
             self.__sound_object = Sound()
         except FileNotFoundError as e:
-            print("Error initializing the sound interface, check if files are here")
+            print("Error initializing the sound interface, check if files are here, continuing anyway")
             print(e)
+            self.__sound_object = None
         
         running = True
         

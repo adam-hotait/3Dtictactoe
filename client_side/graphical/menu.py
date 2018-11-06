@@ -11,7 +11,12 @@ class Menu:
     def __init__(self, window, sound_object):
 
         self.__window = window
-        self.__fond = pygame.image.load("client_side/graphical/menu.jpg").convert()
+        try:
+            self.__fond = pygame.image.load("client_side/graphical/menu.jpg").convert()
+        except FileNotFoundError as e:
+            print("Not able to open menu.jpg, continuing anyway")
+            print(e)
+            self.fond = None
         self.__fond = pygame.transform.scale(self.__fond, window.get_dimension())
         self.__sound_object = sound_object
 
@@ -100,7 +105,8 @@ class Menu:
 
                 # Display
                 self.__window.screen.fill((0, 0, 0))
-                self.__window.screen.blit(self.__fond, (0, 0))
+                if self.__fond:
+                    self.__window.screen.blit(self.__fond, (0, 0))
                 for k in range(len(self.__options)):
                     option = self.__options[k]
 
@@ -199,7 +205,8 @@ class Menu:
                     # Display
 
                     self.__window.screen.fill((0, 0, 0))
-                    self.__window.screen.blit(self.__fond, (0, 0))
+                    if self.__fond:
+                        self.__window.screen.blit(self.__fond, (0, 0))
                     for k in range(len(self.__options)):
                         option = self.__options[k]
                         option.draw(self.__window.screen, False)

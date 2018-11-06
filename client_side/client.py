@@ -4,10 +4,18 @@ from client_side.graphical.commWithGUI import CommWithGUI
 from client_side.graphical.gui3d import Gui3D
 from client_side.graphical.connexionScreen import ConnexionScreen
 from client_side.graphical.deconnectionScreen import DeconnectionScreen
+import re
 
 
 class Client:
     def __init__(self, player, window, sound_object, host='localhost', port=12800):
+        if not(type(port) == int and 0 <= port <= 65535):
+            raise ValueError("Port not valid")
+        if not(host == 'localhost' or re.match('^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)[.]'
+                                                   + '(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)[.]'
+                                                   + '(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)[.]'
+                                                   + '(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$', host)):
+            raise ValueError("IP not valid")
         self.__player = player
         self._window = window
         self._host = host
