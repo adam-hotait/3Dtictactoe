@@ -11,7 +11,7 @@ class Menu:
     def __init__(self, window, sound_object):
 
         self.__window = window
-        self.__fond = pygame.image.load("graphical/menu.jpg").convert()
+        self.__fond = pygame.image.load("client_side/graphical/menu.jpg").convert()
         self.__fond = pygame.transform.scale(self.__fond, window.get_dimension())
         self.__sound_object = sound_object
 

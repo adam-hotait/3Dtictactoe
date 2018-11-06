@@ -23,7 +23,7 @@ class ClientSideBoard:
         self.__space_between_cubes = 1  # Fraction of the cubes' size
         self.__cubes = None  # Will be initialized in the generate method
         self.__background = None
-        self.__background = pygame.image.load("graphical/background_board.png")
+        self.__background = pygame.image.load("client_side/graphical/background_board.png")
 
     @property
     def position(self):

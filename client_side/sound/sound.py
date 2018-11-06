@@ -1,21 +1,19 @@
 import pygame
 
+
 class Sound:
     """Class that manages all sounds (music and sound effects)"""
 
     def __init__(self):
         """Constructor"""
 
-        pygame.mixer.music.load("sound/Tetris.mp3")
+        pygame.mixer.music.load("client_side/sound/Tetris.mp3")
         pygame.mixer.music.set_volume(0.5)
-        self.__victory_music = pygame.mixer.Sound("sound/victory.wav")
-        self.__defeat_music = pygame.mixer.Sound("sound/defeat.wav")
-        self.__selection_player_1 = pygame.mixer.Sound("sound/selection_player_1.wav")
-        self.__selection_player_2 = pygame.mixer.Sound("sound/selection_player_2.wav")
-
+        self.__victory_music = pygame.mixer.Sound("client_side/sound/victory.wav")
+        self.__defeat_music = pygame.mixer.Sound("client_side/sound/defeat.wav")
+        self.__selection_player_1 = pygame.mixer.Sound("client_side/sound/selection_player_1.wav")
+        self.__selection_player_2 = pygame.mixer.Sound("client_side/sound/selection_player_2.wav")
         self.__is_muted = False
-
-
 
     def play(self):
         pygame.mixer.stop()
