@@ -37,6 +37,11 @@ We use [GitHub](https://github.com/adam-hotait/3Dtictactoe) for version control.
 
 ## Troubleshooting
 
+#### Impossible to connect
+The LAN game mode does not work on the `eduroam` network and might not work with some firewalls.
+
+If not other network is available, we suggest to connect through a mobile phone access point. 
+
 #### MacOS Mojave
 There is an upstream SDL issue on MacOS Mojave (see [bug report](https://github.com/pygame/pygame/issues/555)).
 The game doesn't work on the Python version that [Homebrew](https://brew.sh/) installs.
