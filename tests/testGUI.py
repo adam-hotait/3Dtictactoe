@@ -1,8 +1,8 @@
-from graphical.gui3d import Gui3D
-from graphical.commWithGUI import CommWithGUI
+from client_side.graphical.gui3d import Gui3D
+from client_side.graphical.commWithGUI import CommWithGUI
 from time import sleep
 from threading import Thread
-from graphical.window import Window
+from client_side.graphical.window import Window
 
 
 class TestGUI(Thread):

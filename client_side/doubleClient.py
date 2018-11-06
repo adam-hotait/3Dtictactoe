@@ -1,9 +1,9 @@
 import socket
-from commClient import CommClient
-from graphical.commWithGUI import CommWithGUI
-from graphical.gui3d import Gui3D
-from client import Client
-from graphical.deconnectionScreen import DeconnectionScreen
+from client_side.commClient import CommClient
+from client_side.graphical.commWithGUI import CommWithGUI
+from client_side.graphical.gui3d import Gui3D
+from client_side.client import Client
+from client_side.graphical.deconnectionScreen import DeconnectionScreen
 
 class DoubleClient(Client):
     """Class to make 2 players play in same window"""

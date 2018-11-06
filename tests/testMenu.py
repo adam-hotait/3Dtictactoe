@@ -1,5 +1,5 @@
-from graphical.window import Window
-from graphical.menu import Menu
+from client_side.graphical.window import Window
+from client_side.graphical.menu import Menu
 
 window = Window((1280, 720))
 

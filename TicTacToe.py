@@ -1,9 +1,10 @@
-from server_side.server import Server
-from client import Client
-from graphical.window import Window
-from graphical.menu import Menu
-from doubleClient import DoubleClient
-from sound.sound import Sound
+from client_side.server_side.server import Server
+from client_side.client import Client
+from client_side.graphical.window import Window
+from client_side.graphical.menu import Menu
+from client_side.doubleClient import DoubleClient
+from client_side.sound.sound import Sound
+
 
 class TicTacToeMain():
     """Main class of the program, displays menu then launches client and server"""

@@ -1,9 +1,9 @@
 import socket
-from commClient import CommClient
-from graphical.commWithGUI import CommWithGUI
-from graphical.gui3d import Gui3D
-from graphical.connexionScreen import ConnexionScreen
-from graphical.deconnectionScreen import DeconnectionScreen
+from client_side.commClient import CommClient
+from client_side.graphical.commWithGUI import CommWithGUI
+from client_side.graphical.gui3d import Gui3D
+from client_side.graphical.connexionScreen import ConnexionScreen
+from client_side.graphical.deconnectionScreen import DeconnectionScreen
 
 
 class Client:
