@@ -32,9 +32,9 @@ class Server(Thread):
         try:
             self.__sock.bind((self.__host, self.__port))
         except socket.error as error:
-            print('Server bind error.')
+            print('SERVER: Server bind error.')
             if error.errno == errno.EADDRINUSE:
-                print('Address already in use (maybe something else is running on port {})'.format(self.__port))
+                print('SERVER: Address already in use (maybe something else is running on port {})'.format(self.__port))
             sys.exit(1)
 
         # Initialisation of client related objects
@@ -50,7 +50,7 @@ class Server(Thread):
         # while the server is waiting for an incoming connection
         self.__waiting = True
 
-        print('Server initialised')
+        print('SERVER: Server initialised')
 
     def set_waiting_false(self):
         """
@@ -60,14 +60,14 @@ class Server(Thread):
 
     def run(self):
         self.__sock.listen(self.__max_clients)  # The server listens to connection requests
-        print('Server running and listening on port {}'.format(self.__port))
+        print('SERVER: Server running and listening on port {}'.format(self.__port))
         while len(self.__client_list) < self.__max_clients and self.__waiting:
             connection_in_queue, wlist, xlist = select.select([self.__sock], [], [], 0.05)
             for connection in connection_in_queue:  # If there is a connection request
                 client, address = connection.accept()  # Accept the request
                 self.__client_list.append(client)
 
-                print('Connected to client at address: {}'.format(address))
+                print('SERVER: Connected to client at address: {}'.format(address))
 
                 # Summon a 'SendToClient' and a 'ListenToClient' instance to communicate with this client
                 self.__client_listeners.append(ListenToClient(client, self.game_session, len(self.__client_list)))
@@ -79,16 +79,16 @@ class Server(Thread):
             # We start all threads and join the game session.
             for client_listener in self.__client_listeners:
                 client_listener.start()
-                print('Started all listeners')
+            print('SERVER: Started all listeners')
             for client_sender in self.__client_senders:
                 client_sender.start()
-                print('Started all senders')
+            print('SERVER: Started all senders')
             self.game_session.start()
-            print('Started game session. Now joining it...')
+            print('SERVER: Now joining game session...')
             self.game_session.join()
         # At the end of the thread execution, the server can be stopped.
         self.__sock.close()
-        print('Server closed.')
+        print('SERVER: Server closed.')
 
 
 if __name__ == "__main__":

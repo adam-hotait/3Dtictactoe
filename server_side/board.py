@@ -10,10 +10,10 @@ class Board:
     def __init__(self):
         self.__board = np.zeros((3, 3, 3), dtype=int)  # An empty board is created
         self.__win = False
-        print('Board initialised')
+        print('SERVER: Board initialised')
 
     def reset(self):
-        print('Resetting board')
+        print('SERVER: Resetting board')
         self.__init__()  # We reset the attributes when a reset is asked for
 
     @property

@@ -38,7 +38,7 @@ class GameSession(threading.Thread):
         # another action
         self.__semaphore = threading.BoundedSemaphore(2)
 
-        print('Game session created')
+        print('SERVER: Game session created')
 
     @property
     def response(self):
@@ -61,7 +61,7 @@ class GameSession(threading.Thread):
         self.__semaphore.release()
 
     def run(self):
-        print('Game session started')
+        print('SERVER: Game session started.')
         while self.__running:
             self.__recvEvent.wait()  # Wait for a message incoming from a player
             with self.send_condition:
@@ -73,7 +73,7 @@ class GameSession(threading.Thread):
                 with self.__lock:
                     data_dict = self.__data_queue.pop()  # We take the latest command received
 
-                print('Now processing message: {}'.format(data_dict))
+                print('SERVER: Now processing message: {}'.format(data_dict))
                 # If the game hasn't been won, the command is a play on a cube and it is from the current player...
                 # (NB: if it is not the current player's turn, the command will be ignored)
                 if not self.__board.win and\
@@ -85,7 +85,7 @@ class GameSession(threading.Thread):
                                                                 data_dict['player_id'])
                     # If the board returns an error (because the played cube is already taken), do nothing
                     if status == 'ERR':
-                        print('Cube already occupied')
+                        print('SERVER: Cube already occupied')
                     # If the play is legit, store the returned data in __response
                     else:
                         if status == 'WIN':
@@ -112,12 +112,12 @@ class GameSession(threading.Thread):
                 if self.__response is not None:
                     with self.__lock:
                         self.__data_queue = []
-                    print('The command was legit. Now sending response: {}'.format(self.response))
+                    print('SERVER: Now sending response: {}'.format(self.response))
                     self.__sendCondition.notify_all()
                 else:
                     # If the response is None, it won't be used by 'SendToClient' threads, we can release the semaphores
-                    print('The message {} was illegal. Discarding.'.format(data_dict))
+                    print('SERVER: The message {} was illegal. Discarding.'.format(data_dict))
                     self.__semaphore.release()
                     self.__semaphore.release()
-        print('Game session exited.')
+        print('SERVER: Game session exited.')
 
