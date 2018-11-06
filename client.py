@@ -7,7 +7,7 @@ from graphical.deconnectionScreen import DeconnectionScreen
 
 
 class Client:
-    def __init__(self, player, window, sound_object, host = 'localhost', port = 12800):
+    def __init__(self, player, window, sound_object, host='localhost', port=12800):
         self.__player = player
         self._window = window
         self._host = host
@@ -16,7 +16,6 @@ class Client:
         self._sound_object = sound_object
 
     def launch(self):
-
         try:
             print("client lance")
             self.__socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -42,7 +41,6 @@ class Client:
             resp = DeconnectionScreen(self._window).launch()
 
             return resp
-
 
     def close(self):
         if self.__socket:
