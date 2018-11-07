@@ -25,7 +25,7 @@ class CommClient(Thread):
                 elif event[0] == "CLK":
                     if event[1]:
                         i, j, k = event[1]
-                        self.__connexion_with_server.send(f'CLK{i}{j}{k}'.encode())
+                        self.__connexion_with_server.send(('CLK{}{}{}'.format(i,j,k)).encode())
 
             for event in self.receive_from_server():
                 if event[0] == "QUT":
