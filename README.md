@@ -10,8 +10,8 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-This projects needs `Python3`, as well as the `numpy` and `pygame` packages.
-If `Python3` is installed on your machine, you can automatically install the requirements using pip:
+This projects needs `Python (>3.6)`, as well as the `numpy` and `pygame` packages.
+If `Python (>3.6)` is installed on your machine, you can automatically install the requirements using pip:
 
 ```
 pip install -r requirements.txt
@@ -41,6 +41,9 @@ We use [GitHub](https://github.com/adam-hotait/3Dtictactoe) for version control.
 The LAN game mode does not work on the `eduroam` network and might not work with some firewalls.
 
 If not other network is available, we suggest to connect through a mobile phone access point. 
+
+#### No image
+If you don't have anything besides an empty window when you first launch the game, waiting 5 seconds usually solves the problem.
 
 #### MacOS Mojave
 There is an upstream SDL issue on MacOS Mojave (see [bug report](https://github.com/pygame/pygame/issues/555)).
